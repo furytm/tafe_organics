@@ -32,7 +32,7 @@ export default function Footer() {
         {/* Copyright */}
         <div className="text-center text-gray-400">
           <p>
-            Copyright © 2025 Táfe Organics. Website Developed by <span className="text-[#6BBE49]">CDS</span>
+            Copyright © 2025 Táfe Organics. Developed and designed by Suwebatu <span className="text-[#6BBE49]">Suwebatu</span>
           </p>
         </div>
       </div>
