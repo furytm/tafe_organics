@@ -1,5 +1,5 @@
-import BarSoap from "@/src/BarSoap"
+import BarSoapPageContent from "@/src/bar-soap-page"
 
-export default function Page() {
-  return <BarSoap />
+export default function BarSoapPage() {
+  return <BarSoapPageContent />
 }

@@ -1,10 +1,5 @@
-import Shop from "@/src/Shop"
+import ShopPageContent from "@/src/shop-page"
 
-export const metadata = {
-  title: "Shop | Tafe Organics",
-  description: "Browse our collection of organic skincare products",
-}
-
-export default function Page() {
-  return <Shop />
+export default function ShopPage() {
+  return <ShopPageContent />
 }

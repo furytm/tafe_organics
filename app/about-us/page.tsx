@@ -1,5 +1,5 @@
-import AboutUs from "@/src/AboutUs"
+import AboutPageContent from "@/src/about-page"
 
-export default function Page() {
-  return <AboutUs />
+export default function AboutPage() {
+  return <AboutPageContent />
 }

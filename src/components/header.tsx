@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image";
 import { useState } from "react"
 import { Menu, X, Search } from "lucide-react"
 
@@ -13,15 +12,10 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-         <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-      <Image
-        src="/logo.png" // your image path in the public folder
-        alt="Tafe Organics Logo"
-        width={120}
-        height={40}
-        priority
-      />
-    </Link>
+          <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+            <div className="text-2xl font-bold text-[#752E2E]">Tafe</div>
+            <div className="text-sm text-green-600 font-semibold">ORGANICS</div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">

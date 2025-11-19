@@ -1,5 +1,5 @@
-import Home from "@/src/Home"
+import HomeContent from "@/src/home-content"
 
-export default function Page() {
-  return <Home />
+export default function Home() {
+  return <HomeContent />
 }

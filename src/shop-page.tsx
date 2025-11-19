@@ -1,36 +1,24 @@
 "use client"
 
-import Header from "@/components/header"
-import Footer from "@/components/footer"
-import WhatsAppButton from "@/components/whatsapp-button"
 import { useState } from "react"
 import { Eye } from 'lucide-react'
-import { productsData } from "./products-data"
+import { productsData } from "@/lib/products-data"
+import Link from 'next/link'
 
-export default function Shop() {
+export default function ShopPageContent() {
   const [hoveredProduct, setHoveredProduct] = useState<number | null>(null)
   const [sortBy, setSortBy] = useState("popularity")
 
   return (
     <main>
-      <Header />
-      <WhatsAppButton />
-      {/* Breadcrumb */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 animate-fadeIn">
-        <p className="text-gray-600 text-sm">
-          <a href="/" className="hover:text-gray-900">
-            Home
-          </a>{" "}
-          / Shop
-        </p>
-      </div>
+     
 
       {/* Shop Header with Title and Sort */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 border-b border-gray-200 animate-slideUp">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 border-b border-gray-200">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div>
             <h1 className="text-4xl font-bold text-gray-900 mb-2">Shop</h1>
-            <p className="text-gray-600">Showing all 11 results</p>
+            <p className="text-gray-600">Showing all {productsData.length} results</p>
           </div>
           <select
             value={sortBy}
@@ -45,20 +33,17 @@ export default function Shop() {
         </div>
       </div>
 
-      {/* Products Grid */}
+      {/* Products Grid - Updated to 2 columns on mobile for consistency */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
           {productsData.map((product, index) => (
-            <a 
+            <Link
               key={product.id} 
               href={`/products/${product.slug}`} 
-              className="group animate-scaleIn"
-              style={{
-                animationDelay: `${index * 0.1}s`,
-              }}
+              className="group"
             >
               <div
-                className="relative overflow-hidden rounded-lg bg-gray-100 h-64 mb-4 cursor-pointer"
+                className="relative overflow-hidden rounded-lg bg-gray-100 aspect-square mb-3 cursor-pointer"
                 onMouseEnter={() => setHoveredProduct(product.id)}
                 onMouseLeave={() => setHoveredProduct(null)}
               >
@@ -69,7 +54,7 @@ export default function Shop() {
                 />
                 {/* Quick View overlay */}
                 {hoveredProduct === product.id && (
-                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center transition animate-fadeIn">
+                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center transition">
                     <div className="text-white text-center">
                       <Eye className="w-6 h-6 mx-auto mb-2" />
                       <span className="text-xs font-semibold">Quick View</span>
@@ -78,18 +63,26 @@ export default function Shop() {
                 )}
               </div>
 
-              <h3 className="text-sm font-bold text-gray-900 uppercase mb-2 line-clamp-2">{product.name}</h3>
-              <p className="text-[#E89B3C] font-bold mb-3">₦{product.price.toLocaleString()}.00</p>
+              <div className="px-1">
+                <h3 className="text-sm font-bold text-gray-900 uppercase mb-2 line-clamp-2">{product.name}</h3>
+                
+                {product.variants && product.variants.length > 0 ? (
+                  <>
+                    <p className="text-[#E89B3C] font-bold text-sm">₦{product.variants[0].price.toLocaleString()}.00</p>
+                    <p className="text-xs text-gray-600 mb-3">{product.variants[0].weight}</p>
+                  </>
+                ) : (
+                  <p className="text-[#E89B3C] font-bold text-sm mb-3">Price on request</p>
+                )}
 
-              <button className="w-full bg-gray-200 text-gray-700 font-semibold py-2 rounded hover:bg-gray-300 transition">
-                Add to cart
-              </button>
-            </a>
+                <button className="w-full bg-gray-200 text-gray-700 font-semibold py-2 rounded hover:bg-gray-300 transition text-xs">
+                  Add to cart
+                </button>
+              </div>
+            </Link>
           ))}
         </div>
       </div>
-
-      <Footer />
     </main>
   )
 }
