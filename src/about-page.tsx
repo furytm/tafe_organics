@@ -41,17 +41,20 @@ export default function AboutPageContent() {
 
   return (
     <main>
-      {/* Hero Section */}
-      <div className="relative w-full h-96 bg-gradient-to-r from-teal-400 to-teal-500 flex items-center justify-center overflow-hidden">
-        <img
-          src="/organic-skincare-product-with-natural-ingredients.jpg"
-          alt="About Us Hero"
-          className="absolute inset-0 w-full h-full object-cover opacity-30"
-        />
-        <div className="relative z-10 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-white">About Us</h1>
-        </div>
-      </div>
+     {/* Hero Section */}
+<div
+  className="relative w-full h-96 flex items-center justify-center bg-cover bg-center"
+  style={{
+    backgroundImage: "url('/images/abouthero.jpeg')",
+  }}
+>
+
+
+  <div className="relative z-10 text-center">
+    <h1 className="text-5xl md:text-6xl font-bold text-white">About Us</h1>
+  </div>
+</div>
+
 
       {/* Brand History */}
       <section className="py-16 px-4 bg-white">
@@ -124,6 +127,90 @@ export default function AboutPageContent() {
                   )}
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+       {/* FAQ Section */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-gray-800 text-white p-12 rounded-lg mb-8">
+            <h2 className="text-3xl font-bold mb-2">BECOME A STOCKIST</h2>
+            <p className="text-lg">Frequently Asked Questions</p>
+          </div>
+          <div className="space-y-4">
+            {[
+              {
+                q: "Why doesn't your soaps small like flowers or candy?",
+                a: "We are a fragrance-free beauty brand and our products carry the natural scents of our rich ingredients.",
+              },
+              {
+                q: "Can someone with dry skin use your bar soap?",
+                a: "Yes, our soaps are specially formulated for dry and sensitive skin types.",
+              },
+              {
+                q: "My bar soap melts quickly. How can I make my soap last longer?",
+                a: "Store your soap in a cool, dry place and use a soap dish that allows proper drainage.",
+              },
+              {
+                q: "How big are your bar soaps?",
+                a: "Each bar is 245g net weight, perfect for extended use.",
+              },
+              {
+                q: "How do I keep my balms & butters fresh?",
+                a: "Keep them in a cool place away from direct sunlight for maximum shelf life.",
+              },
+              {
+                q: "Do you ship to other countries?",
+                a: "Yes, we ship internationally. Contact us for shipping rates.",
+              },
+              {
+                q: "How do I pay in foreign currency?",
+                a: "We accept international payments through multiple payment methods.",
+              },
+              {
+                q: "What are your Shipping Terms?",
+                a: "We offer free standard shipping on orders over ₦100k.",
+              },
+            ].map((faq, idx) => (
+              <details key={idx} className="border-b pb-4 cursor-pointer group">
+                <summary className="font-bold text-amber-900 text-lg group-open:text-amber-700 transition">
+                  {faq.q}
+                </summary>
+                <p className="text-gray-700 mt-2 text-base">{faq.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Team Members */}
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-12">Meet Our Team Members</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <img
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/main%20staff%20image-RAq7rqYooPDdwom1lUGg7owSKnnsW5.jpg"
+                alt="Ifeoluwa Folawiyo"
+                className="w-full h-96 object-cover rounded-lg mb-4"
+              />
+              <h3 className="text-xl font-bold">Ifeoluwa Folawiyo</h3>
+              <p className="text-amber-700 font-semibold">Managing Director</p>
+            </div>
+            <div className="text-center">
+              <img
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2ND%20Staff%20image-Wp0REw0IWsUw7o61CXxddaYY7LWfKa.jpg"
+                alt="Team Group 1"
+                className="w-full h-96 object-cover rounded-lg mb-4"
+              />
+            </div>
+            <div className="text-center">
+              <img
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3rd%20staff%20image-kLi0p2B1kIJEUM7V7xWtP6Wr2Xezr5.jpg"
+                alt="Team Group 2"
+                className="w-full h-96 object-cover rounded-lg mb-4"
+              />
             </div>
           </div>
         </div>
