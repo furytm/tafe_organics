@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Eye, ShoppingCart, ChevronRight } from 'lucide-react'
 import { productsData } from "@/lib/products-data"
+import ProductCard from "@/components/product-card" 
 
 // Promo Banner Component
 function PromoBanner() {
@@ -190,50 +191,11 @@ function ProductsShowcase() {
           <p className="text-gray-600">I'd like to browse for...</p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {displayProducts.map((product) => (
-            <Link
-              key={product.id}
-              href={`/products/${product.slug}`}
-              onMouseEnter={() => setHoveredId(product.id)}
-              onMouseLeave={() => setHoveredId(null)}
-              className="flex flex-col cursor-pointer group"
-            >
-              <div className="relative bg-gray-100 h-80 mb-4 overflow-hidden rounded">
-                <img
-                  src={product.image || "/placeholder.svg"}
-                  alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                />
-
-                {/* {product.outOfStock && (
-                  <div className="absolute top-2 right-2 bg-[#752E2E] text-white px-3 py-1 text-sm font-semibold">
-                    Out Of Stock
-                  </div>
-                )} */}
-
-                {hoveredId === product.id &&  (
-                  <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center gap-3">
-                    <button className="bg-white text-gray-800 px-6 py-2 rounded font-semibold flex items-center gap-2 hover:bg-gray-100">
-                      <Eye size={18} /> Quick View
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              <h3 className="font-bold text-center text-gray-800 text-sm mb-2 uppercase">{product.name}</h3>
-              <p className="text-center text-[#752E2E] font-semibold mb-4">
-                ₦{product.variants && product.variants.length > 0 ? product.variants[0].price.toLocaleString() : 'Price on request'}
-              </p>
-
-             <button
-  className="w-full py-2 rounded font-semibold flex items-center justify-center gap-2 transition bg-[#6BBE49] text-white hover:bg-[#5aaa3f]"
->
-  <ShoppingCart size={18} />
-  Add to cart
-</button>
-
-            </Link>
+            <div key={product.id} onMouseEnter={() => setHoveredId(product.id)} onMouseLeave={() => setHoveredId(null)}>
+              <ProductCard product={product} showVariantSelector={true} />
+            </div>
           ))}
         </div>
 

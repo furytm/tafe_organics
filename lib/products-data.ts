@@ -1,19 +1,19 @@
-// export type Product = {
-//   id: number
-//   slug: string
-//   name: string
-//   category: string
-//   image: string
-//   tagline: string
-//   description: string
-//   howToUse: string
-//   ingredients: string
-//   benefits: string[]
-//   specialFeatures: string[]
-//   tags: string[]
-//   variants: Array<{ weight: string; price: number }>
-//   relatedCategories?: string[]
-// }
+export type Product = {
+  id: number
+   slug: string
+   name: string
+   category: string
+   image: string
+   tagline: string
+   description: string
+   howToUse: string
+   ingredients: string
+   benefits: string[]
+   specialFeatures: string[]
+   tags: string[]
+   variants: Array<{ weight: string; price: number }>
+   relatedCategories?: string[]
+ }
 
 export const productsData = [
   // SOAPS (6 products)
