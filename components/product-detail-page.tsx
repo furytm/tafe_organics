@@ -1,35 +1,45 @@
 "use client"
 
-import Header from "@/components/header"
-import Footer from "@/components/footer"
-import WhatsAppButton from "@/components/whatsapp-button"
 import { useState } from "react"
-import { productsData } from "./products-data"
+import { productsData } from "@/lib/products-data"
 
-export function ProductDetail({ slug }: { slug: string }) {
-  const product = productsData.find(p => p.slug === slug)
+
+
+export default function ProductPageContent({ params }: { params: { slug: string } }) {
+  
+  console.log("Slug from URL:", params.slug)
+  console.log("Available slugs:", productsData.map(p => p.slug))
+
+  const product = productsData.find((p) => {
+    console.log(
+      " Looking for slug:",
+      params.slug,
+      "Available slugs:",
+      productsData.map((p) => p.slug),
+    )
+    return p.slug === params.slug
+  })
+    console.log("Matched product:", product);
   const [quantity, setQuantity] = useState(1)
+  const [selectedVariant, setSelectedVariant] = useState(0)
   const [activeTab, setActiveTab] = useState("description")
 
   if (!product) {
     return (
       <main>
-        <Header />
         <div className="max-w-7xl mx-auto px-4 py-12 text-center">
           <h1 className="text-2xl font-bold">Product not found</h1>
         </div>
-        <Footer />
       </main>
     )
   }
 
   const relatedProducts = productsData.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4)
+  const currentVariant = product.variants?.[selectedVariant]
+  const currentPrice = currentVariant?.price || 0
 
   return (
     <main>
-      <Header />
-      <WhatsAppButton />
-
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <p className="text-gray-600 text-sm">
@@ -48,9 +58,31 @@ export function ProductDetail({ slug }: { slug: string }) {
           {/* Product Details */}
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
-            <p className="text-2xl font-bold text-[#E89B3C] mb-4">₦{product.price.toLocaleString()}.00</p>
+            <p className="text-2xl font-bold text-[#E89B3C] mb-4">₦{currentPrice.toLocaleString()}.00</p>
 
             <p className="text-gray-700 mb-6">{product.description}</p>
+
+            {/* Variant Selection */}
+            {product.variants && product.variants.length > 0 && (
+              <div className="mb-6">
+                <h3 className="font-semibold text-gray-900 mb-3">Select Weight:</h3>
+                <div className="flex flex-wrap gap-2">
+                  {product.variants.map((variant, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setSelectedVariant(idx)}
+                      className={`px-4 py-2 border rounded transition ${
+                        selectedVariant === idx
+                          ? "border-[#E89B3C] bg-[#E89B3C] text-white"
+                          : "border-gray-300 hover:border-gray-400"
+                      }`}
+                    >
+                      {variant.weight}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Quantity and Add to Cart */}
             <div className="flex gap-4 mb-6">
@@ -104,8 +136,12 @@ export function ProductDetail({ slug }: { slug: string }) {
             <div>
               <h2 className="text-xl font-bold text-gray-900 mb-4">Additional Information</h2>
               <div className="space-y-3">
-                <p><span className="font-semibold">Size:</span> 170g</p>
-                <p><span className="font-semibold">Price:</span> ₦{product.price.toLocaleString()}.00</p>
+                {currentVariant && (
+                  <>
+                    <p><span className="font-semibold">Size:</span> {currentVariant.weight}</p>
+                    <p><span className="font-semibold">Price:</span> ₦{currentPrice.toLocaleString()}.00</p>
+                  </>
+                )}
                 <p><span className="font-semibold">Category:</span> {product.category}</p>
               </div>
             </div>
@@ -129,15 +165,17 @@ export function ProductDetail({ slug }: { slug: string }) {
                     <img src={relatedProduct.image || "/placeholder.svg"} alt={relatedProduct.name} className="w-full h-full object-cover group-hover:scale-105 transition" />
                   </div>
                   <h3 className="font-bold text-gray-900 text-sm mb-2">{relatedProduct.name}</h3>
-                  <p className="text-[#E89B3C] font-bold">₦{relatedProduct.price.toLocaleString()}.00</p>
+                  {relatedProduct.variants && relatedProduct.variants.length > 0 ? (
+                    <p className="text-[#E89B3C] font-bold">₦{relatedProduct.variants[0].price.toLocaleString()}.00</p>
+                  ) : (
+                    <p className="text-[#E89B3C] font-bold">Price on request</p>
+                  )}
                 </a>
               ))}
             </div>
           </div>
         )}
       </div>
-
-      <Footer />
     </main>
   )
 }

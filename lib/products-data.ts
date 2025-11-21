@@ -1,3 +1,20 @@
+// export type Product = {
+//   id: number
+//   slug: string
+//   name: string
+//   category: string
+//   image: string
+//   tagline: string
+//   description: string
+//   howToUse: string
+//   ingredients: string
+//   benefits: string[]
+//   specialFeatures: string[]
+//   tags: string[]
+//   variants: Array<{ weight: string; price: number }>
+//   relatedCategories?: string[]
+// }
+
 export const productsData = [
   // SOAPS (6 products)
   {
@@ -30,6 +47,8 @@ export const productsData = [
       { weight: "40g", price: 1500 },
       { weight: "3-pack", price: 13800 }
     ]
+  ,relatedCategories: ["Soaps", "Skincare"],
+
   },
   {
     id: 2,
@@ -61,7 +80,8 @@ export const productsData = [
       { weight: "170g", price: 5000 },
       { weight: "40g", price: 1500 },
       { weight: "3-pack", price: 13800 }
-    ]
+    ],relatedCategories: ["Soaps", "Skincare"],
+
   },
   {
     id: 3,
@@ -93,7 +113,7 @@ export const productsData = [
       { weight: "170g", price: 5000 },
       { weight: "40g", price: 1500 },
       { weight: "3-pack", price: 13800 }
-    ]
+    ],relatedCategories: ["Soaps", "Skincare"],
   },
   {
     id: 4,
@@ -125,7 +145,7 @@ export const productsData = [
       { weight: "170g", price: 5000 },
       { weight: "40g", price: 1500 },
       { weight: "3-pack", price: 13800 }
-    ]
+    ],relatedCategories: ["Soaps", "Skincare"],
   },
   {
     id: 5,
@@ -157,7 +177,7 @@ export const productsData = [
       { weight: "170g", price: 5000 },
       { weight: "40g", price: 1500 },
       { weight: "3-pack", price: 13800 }
-    ]
+    ],relatedCategories: ["Soaps", "Skincare"],
   },
   {
     id: 6,
@@ -189,7 +209,7 @@ export const productsData = [
       { weight: "170g", price: 5000 },
       { weight: "40g", price: 1500 },
       { weight: "3-pack", price: 13800 }
-    ]
+    ],relatedCategories: ["Soaps", "Skincare"],
   },
 
   // BALMS & OILS (4 products)
@@ -223,7 +243,7 @@ export const productsData = [
       { weight: "1kg", price: 10000 },
       { weight: "250g", price: 3500 },
       { weight: "100g", price: 1500 }
-    ]
+    ],relatedCategories: ["Soaps", "Skincare"],
   },
   {
     id: 8,
@@ -255,7 +275,7 @@ export const productsData = [
       { weight: "99g", price: 7000 },
       { weight: "50g", price: 3500 },
       { weight: "3-pack", price: 18000 }
-    ]
+    ],relatedCategories: ["Soaps", "Skincare"],
   },
   {
     id: 9,
@@ -287,7 +307,7 @@ export const productsData = [
       { weight: "100g", price: 6500 },
       { weight: "50g", price: 3500 },
       { weight: "3-pack", price: 18000 }
-    ]
+    ],relatedCategories: ["Soaps", "Skincare"],
   },
   {
     id: 10,
@@ -318,7 +338,7 @@ export const productsData = [
     variants: [
       { weight: "100ml", price: 6500 },
       { weight: "3-pack", price: 18000 }
-    ]
+    ],relatedCategories: ["Soaps", "Skincare"],
   },
 
   // WELLNESS (1 product)
@@ -349,6 +369,6 @@ export const productsData = [
     tags: ["hot balm", "muscle relief", "warming", "wellness", "therapeutic"],
     variants: [
       { weight: "99g", price: 7000 }
-    ]
+    ],relatedCategories: ["Soaps", "Skincare"],
   }
 ]
