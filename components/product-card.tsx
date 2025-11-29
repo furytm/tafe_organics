@@ -41,7 +41,7 @@ export default function ProductCard({ product, showVariantSelector = true }: Pro
       </div>
 
       <div className="px-1">
-        <h3 className="text-sm font-bold text-gray-900 uppercase mb-2 line-clamp-2">{product.name}</h3>
+        <h3 className="text-sm font-bold playfairreg text-gray-900 uppercase mb-2 line-clamp-2">{product.name}</h3>
 
         {showVariantSelector && product.variants && product.variants.length > 1 && (
           <div className="mb-2 flex flex-wrap gap-1">

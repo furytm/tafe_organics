@@ -40,12 +40,7 @@ export default function ProductPageContent({ params }: { params: { slug: string 
 
   return (
     <main>
-      {/* Breadcrumb */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <p className="text-gray-600 text-sm">
-          <a href="/" className="hover:text-gray-900">Home</a> / <a href="/shop" className="hover:text-gray-900">Shop</a> / {product.name}
-        </p>
-      </div>
+      
 
       {/* Product Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -57,7 +52,7 @@ export default function ProductPageContent({ params }: { params: { slug: string 
 
           {/* Product Details */}
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
+            <h1 className="text-3xl font-bold  text-gray-900 mb-2">{product.name}</h1>
             <p className="text-2xl font-bold text-[#E89B3C] mb-4">₦{currentPrice.toLocaleString()}.00</p>
 
             <p className="text-gray-700 mb-6">{product.description}</p>

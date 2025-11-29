@@ -51,7 +51,7 @@ export default function AboutPageContent() {
 
 
   <div className="relative z-10 text-center">
-    <h1 className="text-5xl md:text-6xl font-bold text-white">About Us</h1>
+    <h1 className="text-5xl md:text-6xl playfairbold font-bold text-white">About Us</h1>
   </div>
 </div>
 
@@ -89,6 +89,37 @@ export default function AboutPageContent() {
               Ifeoluwa's desire to reach more people like her son birthed Tafe Organics, an eco conscious beauty brand
               for dry and sensitive skin. Tafe Organics rock ltd was established in August 2021.
             </p>
+          </div>
+        </div>
+      </section>
+  {/* Team Members */}
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-12">Meet Our Team Members</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <img
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/main%20staff%20image-RAq7rqYooPDdwom1lUGg7owSKnnsW5.jpg"
+                alt="Ifeoluwa Folawiyo"
+                className="w-full h-96 object-cover rounded-lg mb-4"
+              />
+              <h3 className="text-xl font-bold">Ifeoluwa Folawiyo</h3>
+              <p className="text-amber-700 font-semibold">Managing Director</p>
+            </div>
+            <div className="text-center">
+              <img
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2ND%20Staff%20image-Wp0REw0IWsUw7o61CXxddaYY7LWfKa.jpg"
+                alt="Team Group 1"
+                className="w-full h-96 object-cover rounded-lg mb-4"
+              />
+            </div>
+            <div className="text-center">
+              <img
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3rd%20staff%20image-kLi0p2B1kIJEUM7V7xWtP6Wr2Xezr5.jpg"
+                alt="Team Group 2"
+                className="w-full h-96 object-cover rounded-lg mb-4"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -183,39 +214,55 @@ export default function AboutPageContent() {
           </div>
         </div>
       </section>
+  {/* MAP SECTION */}
+<section className="py-20 bg-secondary">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <h2 className="font-serif text-4xl font-bold text-primary mb-12 text-center animate-fade-in-up">
+      Find Us
+    </h2>
 
-      {/* Team Members */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12">Meet Our Team Members</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/main%20staff%20image-RAq7rqYooPDdwom1lUGg7owSKnnsW5.jpg"
-                alt="Ifeoluwa Folawiyo"
-                className="w-full h-96 object-cover rounded-lg mb-4"
-              />
-              <h3 className="text-xl font-bold">Ifeoluwa Folawiyo</h3>
-              <p className="text-amber-700 font-semibold">Managing Director</p>
-            </div>
-            <div className="text-center">
-              <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2ND%20Staff%20image-Wp0REw0IWsUw7o61CXxddaYY7LWfKa.jpg"
-                alt="Team Group 1"
-                className="w-full h-96 object-cover rounded-lg mb-4"
-              />
-            </div>
-            <div className="text-center">
-              <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3rd%20staff%20image-kLi0p2B1kIJEUM7V7xWtP6Wr2Xezr5.jpg"
-                alt="Team Group 2"
-                className="w-full h-96 object-cover rounded-lg mb-4"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+    <div className="bg-background rounded-lg overflow-hidden shadow-lg animate-scale-in">
 
+      {/* Google Map */}
+      <div className="w-full h-[300px]">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.356500024856!2d3.2869646735048237!3d6.602543222242809!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b90508df8195b%3A0xedd4d8a831e92efc!2s2%20C%20%26%20I%20Cl%2C%20Idimu%2C%20Lagos%20102213%2C%20Lagos!5e0!3m2!1sen!2sng!4v1764437313918!5m2!1sen!2sng"
+          width="100%"
+          height="100%"
+          style={{ border: 0 }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      </div>
+
+      {/* Map Info Section */}
+      <div className="p-6 text-center">
+        <h3 className="text-xl font-semibold mb-2">Our Location</h3>
+
+        <p className="mb-4">
+          House 2, C Close, Gowon Estate, Ipaja, Lagos.
+        </p>
+
+        <a
+          href="https://maps.google.com/?q=House 2, C Close, Gowon Estate, Ipaja, Lagos"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block bg-primary text-secondary hover:bg-primary/90 
+                     font-medium px-6 py-2 rounded-full transition-all duration-300 
+                     hover:scale-105"
+        >
+          Get Directions
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+    
     </main>
   )
 }

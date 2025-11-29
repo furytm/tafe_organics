@@ -3,155 +3,167 @@
 import { motion } from "framer-motion"
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { Eye, ShoppingCart, ChevronRight } from 'lucide-react'
+import { ChevronRight } from "lucide-react"
 import { productsData } from "@/lib/products-data"
-import ProductCard from "@/components/product-card" 
+import ProductCard from "@/components/product-card"
 
-// Promo Banner Component
-function PromoBanner() {
-  return (
-    <div className="bg-[#FFF4B0] text-center py-3 text-sm font-semibold text-gray-800">
-      ★ ★ ★ ★ ★ 100% Pure, Organic and Natural Skin Beautifying Products.
-    </div>
-  )
-}
-
-// Hero Section Component
-function HeroSection() {
+export default function HomeContent() {
+  // HERO LOGIC
   const [currentSlide, setCurrentSlide] = useState(0)
-  
-  const slides = [
-    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/home%20hero-T33ahnNY3KN0K2j2NlU6zun5ONHPsC.jpg",
-    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Unrefined%20Shea-Butter-N7jiY8NLvk84TQYl2IbS5QXUK5O4b5.jpg",
-    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Shea-Cocoa-Balm-SlxJQTQF1E8RNGps5SDdpgDfguAejB.jpg",
+
+   const slides = [
+    {
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/home%20hero-T33ahnNY3KN0K2j2NlU6zun5ONHPsC.jpg",
+      title: "Natural Skincare for Healthy, Conscious Living",
+      subtitle: "Fragrance-free. Eco-friendly.",
+      description: "Made with love for you and the planet",
+    },
+    {
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Unrefined%20Shea-Butter-N7jiY8NLvk84TQYl2IbS5QXUK5O4b5.jpg",
+      title: "Nourish Your Skin Deeply",
+      subtitle: "Pure. Organic. Beautiful.",
+      description: "Discover shea-rich products crafted with love and purity.",
+    },
+    {
+      image:
+         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Shea-Cocoa-Balm-SlxJQTQF1E8RNGps5SDdpgDfguAejB.jpg",
+      // uses slide 1 text (as requested)
+      title: "Elevate Your Skincare",
+      subtitle: "With Pure Radiance",
+      description: "Indulge in nature's luxury for a naturally beautiful you.",
+    },
   ]
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length)
-    }, 5000)
+    }, 6000)
     return () => clearInterval(timer)
-  }, [slides.length])
+  }, [])
+  
+  const categories = [
+    { name: "Soaps", image: "/images/stack.jpg", href: "/bar-soap" },
+    { name: "Scrubs", image: "/images/legs.jpg", href: "/shop" },
+    { name: "Moisturizers", image: "/images/dip.jpg", href: "/shea-butter" },
+    { name: "Gifts", image: "/images/gifts.webp", href: "/shop" },
+  ]
 
   return (
-   <section className="relative w-full h-[50vh] md:h-[70vh] lg:h-screen overflow-hidden">
+    <main>
 
+      {/* PROMO BANNER */}
+      <div className=" bg-[#6BBE49] text-center py-3 text-sm playfairreg font-semibold text-gray-800">
+        ★ ★ ★ ★ ★ 100% Pure, Organic and Natural Skin Beautifying Products.
+      </div>
+
+      {/* HERO SECTION */}
+    <section className="relative w-full h-[40vh] md:h-[75vh] lg:h-screen overflow-hidden flex items-center">
+
+      {/* Background Crossfade */}
       {slides.map((slide, index) => (
         <motion.div
           key={index}
           className="absolute inset-0"
           initial={{ opacity: 0 }}
           animate={{ opacity: currentSlide === index ? 1 : 0 }}
-          transition={{ duration: 1.5, ease: "easeInOut" }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
         >
-          <img
-            src={slide || "/placeholder.svg"}
-            alt={`Hero slide ${index + 1}`}
-            className="w-full h-full object-cover"
-          />
+          <img src={slide.image} className="w-full h-full object-cover" alt="Hero slide" />
+          <div className="absolute inset-0 bg-black/50" />
         </motion.div>
       ))}
 
-      <div className="absolute inset-0 bg-black/45" />
-
-      <div className="absolute inset-0 flex flex-col items-center justify-center px-4 text-white text-center">
+      {/* Text Section */}
+      <div className="relative z-10 max-w-4xl px-6 md:px-12 lg:px-20 text-left text-white">
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-3xl md:text-6xl lg:text-7xl font-serif font-bold mb-4 md:mb-6 leading-tight"
+          key={slides[currentSlide].title + currentSlide}
+          initial={{ opacity: 0, x: -25 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.9 }}
+          className="text-2xl sm:text-3x1 md:text-6xl lg:text-7xl playfairbold mb-4 leading-tight"
         >
-          Elevate Your Skincare
+          {slides[currentSlide].title}
         </motion.h1>
-        
+
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-lg md:text-2xl mb-8 md:mb-12 font-light max-w-2xl"
+          key={slides[currentSlide].subtitle + currentSlide}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.0, delay: 0.2 }}
+          className="text-base sm:text-lg md:text-2xl playfairreg font-light mb-4"
         >
-          With Pure Radiance
+          {slides[currentSlide].subtitle}
         </motion.p>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-base md:text-lg mb-8 max-w-xl font-light"
+          key={slides[currentSlide].description + currentSlide}
+          initial={{ opacity: 0, x: -15 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.0, delay: 0.35 }}
+          className="text-base md:text-lg  playfairreg max-w-md font-light mb-6"
         >
-          Indulge in Nature's Luxury for a Naturally Beautiful You
+          {slides[currentSlide].description}
         </motion.p>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-        >
-          <Link
-            href="/shop"
-            className="inline-block bg-[#6BBE49] text-white px-8 md:px-12 py-4 md:py-5 font-semibold rounded hover:bg-[#5aaa3f] transition text-base md:text-lg"
-          >
-            SHOP OUR BEST-SELLING PRODUCTS
-          </Link>
-        </motion.div>
+   
+<motion.div
+  key={currentSlide + "-buttons"}
+  initial={{ opacity: 0, x: -10 }}
+  animate={{ opacity: 1, x: 0 }}
+  transition={{ duration: 1.0, delay: 0.45 }}
+  className="flex items-center gap-4 mt-4"
+>
+  {/* Shop Now - Primary Button */}
+  <Link
+    href="/shop"
+className="inline-block bg-[#6BBE49] text-white px-6 py-3 md:px-8 md:py-4 text-sm md:text-lg playfairreg font-semibold rounded-lg hover:bg-[#5aaa3f] transition-all duration-300 hover:translate-y-[-2px]"
+
+  >
+    Shop Now
+  </Link>
+
+  {/* Explore Our Story - Transparent Secondary Button */}
+  <Link
+    href="/about-us"
+  className="inline-block border border-white/80 text-white px-6 py-3 md:px-8 md:py-4 text-sm md:text-lg  playfairreg font-semibold rounded-lg backdrop-blur-sm hover:bg-white/10 transition-all duration-300 hover:translate-y-[-2px]"
+
+  >
+    Explore Our Story
+  </Link>
+</motion.div>
+
       </div>
 
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2">
+      {/* Slide Indicators */}
+      <div className="absolute bottom-6 left-10 flex gap-2 z-20">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-2 h-2 rounded-full transition ${
-              currentSlide === index ? "bg-white w-8" : "bg-white/50"
+            className={`h-2 rounded-full transition-all duration-300 ${
+              currentSlide === index ? "bg-white w-8" : "bg-white/50 w-2"
             }`}
           />
         ))}
       </div>
     </section>
-  )
-}
-
-// Brand Intro Component
-function BrandIntro() {
-  return (
+      {/* BRAND INTRO */}
+   
     <section className="py-20 md:py-24 px-4 text-center bg-white">
       <p className="text-2xl md:text-3xl font-serif text-gray-800 max-w-4xl mx-auto leading-relaxed">
-        <span className="bg-[#752E2E] text-white px-3 py-1 inline-block mr-2">"Táfe</span>
+        <span className="bg-[#752E2E] playfairreg text-white px-3 py-1 inline-block mr-2">"Táfe</span>
         Organics was established by a mom in her desperation to help her son's skin get better."
       </p>
     </section>
-  )
-}
 
-// Shop By Category Component
-function ShopByCategory() {
-  const categories = [
-    {
-      name: "Soaps",
-      image: "/images/stack.jpg",
-      href: "/bar-soap",
-    },
-    {
-      name: "Scrubs",
-      image: "/images/legs.jpg",
-      href: "/shop",
-    },
-    {
-      name: "Moisturizers",
-      image: "/images/dip.jpg",
-      href: "/shea-butter",
-    },
-    {
-      name: "Gifts",
-      image: "/images/gifts.webp",
-      href: "/shop",
-    },
-  ]
 
-  return (
+      {/* SHOP BY CATEGORY */}
+
     <section className="py-20 px-4 bg-white -mt-8 md:-mt-16 relative z-10">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16 tracking-widest">SHOP BY CATEGORY</h2>
+        <h2 className="text-3xl md:text-4xl playfairbold font-bold text-center mb-12 md:mb-16 tracking-widest">SHOP BY CATEGORY</h2>
 
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {categories.map((category) => (
@@ -174,51 +186,33 @@ function ShopByCategory() {
         </div>
       </div>
     </section>
-  )
-}
+  
 
-// Products Showcase Component
-function ProductsShowcase() {
-  const [hoveredId, setHoveredId] = useState<number | null>(null)
+      {/* PRODUCT GRID */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl playfairbold font-bold tracking-widest">ACHIEVE YOUR SKIN GOALS, FASTER.</h2>
+            <p className="text-gray-600">I'd like to browse for...</p>
+          </div>
 
-  const displayProducts = productsData
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+            {productsData.map((p) => (
+              <ProductCard key={p.id} product={p} showVariantSelector />
+            ))}
+          </div>
 
-  return (
-    <section className="py-16 px-4 bg-white">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-2 tracking-widest">ACHIEVE YOUR SKIN GOALS, FASTER.</h2>
-          <p className="text-gray-600">I'd like to browse for...</p>
+          <div className="text-center">
+            <Link href="/shop" className="bg-black text-white px-8 py-4 rounded text-lg font-semibold">
+              SHOP ALL OUR SKINCARE PRODUCTS
+            </Link>
+            <p className="mt-4 text-sm text-gray-600">
+              Free Standard Shipping on Orders Over ₦100k
+            </p>
+          </div>
         </div>
+      </section>
 
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {displayProducts.map((product) => (
-            <div key={product.id} onMouseEnter={() => setHoveredId(product.id)} onMouseLeave={() => setHoveredId(null)}>
-              <ProductCard product={product} showVariantSelector={true} />
-            </div>
-          ))}
-        </div>
-
-        <div className="text-center">
-          <button className="bg-black text-white px-8 py-4 rounded font-semibold text-lg hover:bg-gray-800 transition">
-            SHOP ALL OUR SKINCARE PRODUCTS
-          </button>
-          <p className="text-sm text-gray-600 mt-4">Free Standard Shipping on Orders Over ₦100k</p>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// Main Home Content Component
-export default function HomeContent() {
-  return (
-    <main>
-      <PromoBanner />
-      <HeroSection />
-      <BrandIntro />
-      <ShopByCategory />
-      <ProductsShowcase />
     </main>
   )
 }

@@ -9,21 +9,16 @@ export default function ShopPageContent() {
 
   return (
     <main>
-      {/* Breadcrumb */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <p className="text-gray-600 text-sm">
-          <a href="/" className="hover:text-gray-900">
-            Home
-          </a>{" "}
-          / Shop
-        </p>
+    {/* PROMO BANNER */}
+      <div className=" bg-[#6BBE49] text-center py-3 text-sm playfairreg font-semibold text-gray-800">
+        ★ ★ ★ ★ ★   Free Standard Shipping on Orders Over ₦100k.
       </div>
 
       {/* Shop Header with Title and Sort */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 border-b border-gray-200">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">Shop</h1>
+            <h1 className="text-4xl  playfairbold text-gray-900 mb-2"> Tafe Shop</h1>
             <p className="text-gray-600">Showing all {productsData.length} results</p>
           </div>
           <select

@@ -27,7 +27,7 @@ export default function Header() {
     </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex  playfairreg items-center gap-8">
             <Link href="/" className="text-gray-800 hover:text-[#752E2E] transition">
               Home
             </Link>
@@ -45,13 +45,15 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* Search Bar */}
-          <div className="hidden md:flex items-center gap-2 bg-gray-100 px-4 py-2 rounded">
-            <input type="text" placeholder="What Product?" className="bg-transparent outline-none text-sm w-32" />
-            <button className="bg-[#752E2E] text-white p-2 rounded hover:bg-[#5a2222] transition">
-              <Search size={16} />
-            </button>
-          </div>
+         <Link
+  href="/contact"
+  className="inline-block bg-[#6BBE49] text-white px-5 py-3 md:px-8 md:py-4 
+             text-sm md:text-lg playfairbold font-semibold rounded-full 
+             hover:bg-[#5aaa3f] transition-all duration-300 hover:translate-y-[-2px]"
+>
+  Contact Táfe
+</Link>
+
 
           {/* Mobile Menu Button */}
           <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden text-[#752E2E]">
@@ -61,7 +63,7 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <nav className="md:hidden bg-gray-50 border-t px-4 py-4 flex flex-col gap-4">
+          <nav className="md:hidden bg-gray-50 border-t playfairreg px-4 py-4 flex flex-col gap-4">
             <Link href="/" className="text-gray-800 hover:text-[#752E2E]" onClick={() => setIsMenuOpen(false)}>
               Home
             </Link>
