@@ -1,20 +1,18 @@
 "use client"
 import { productsData } from "@/lib/products-data"
-import ProductCard from "@/components/product-card" 
+import ProductCard from "@/components/product-card"
 
 export default function SheaButterPageContent() {
   const balmsAndOils = productsData.filter((p) => p.category === "Balms & Oils")
 
   return (
-    <main>  
-       {/* PROMO BANNER */}
+    <main>
+      {/* PROMO BANNER */}
       <div className=" bg-[#6BBE49] text-center py-3 text-sm playfairreg font-semibold text-gray-800">
-        ★ ★ ★ ★ ★ 100% Pure, Organic and Natural Skin Beautifying Products.
+        ★ ★ ★ ★ ★ Free Standard Shipping on Orders Over ₦100k.
       </div>
       <div className="py-12 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
-     
-
           {/* Title and Results */}
           <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-8 gap-4">
             <div>

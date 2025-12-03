@@ -1,25 +1,18 @@
 "use client"
 
-import { Instagram, MessageCircle, Mail } from "lucide-react"
-
+import { Instagram, Mail } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 export default function Footer() {
   return (
     <footer className="bg-black text-white py-20 px-6 mt-20">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-16">
-
-           {/* LEFT — Brand & Social */}
+        {/* LEFT — Brand & Social */}
         <div className="text-center lg:text-left">
           {/* Replace Text With Logo Image */}
           <div className="flex justify-center lg:justify-start mb-6">
-            <Image 
-              src="/images/logo.png" 
-              alt="Táfe Organics Logo" 
-              width={160} 
-              height={80} 
-              className="object-contain"
-            />
+            <Image src="/images/logo.png" alt="Táfe Organics Logo" width={160} height={80} className="object-contain" />
           </div>
 
           <p className="text-gray-300 text-sm max-w-sm mx-auto lg:mx-0 mb-6">
@@ -33,31 +26,26 @@ export default function Footer() {
               href="https://www.instagram.com/tafeorganics"
               target="_blank"
               className="bg-[#E4405F] p-3 rounded-full hover:opacity-80 transition"
+              rel="noreferrer"
             >
               <Instagram size={22} />
             </a>
 
-        {/* WhatsApp */}
-<a
-  href="https://wa.me/2348108400962"
-  target="_blank"
-  className="bg-[#25D366] p-3 rounded-full hover:opacity-80 transition flex items-center justify-center"
->
-  <img
-    src="/images/whatsapp3.webp"
-    alt="WhatsApp"
-    className="w-5 h-5 object-contain"
-  />
-</a>
-
+            {/* WhatsApp */}
+            <a
+              href="https://wa.me/2348108400962"
+              target="_blank"
+              className="bg-[#25D366] p-3 rounded-full hover:opacity-80 transition flex items-center justify-center"
+              rel="noreferrer"
+            >
+              <img src="/images/whatsapp3.webp" alt="WhatsApp" className="w-5 h-5 object-contain" />
+            </a>
           </div>
         </div>
 
         {/* MIDDLE — Contact Form */}
         <div>
-          <h3 className="text-2xl font-semibold mb-6 text-center lg:text-left">
-            Send Us a Message
-          </h3>
+          <h3 className="text-2xl font-semibold mb-6 text-center lg:text-left">Send Us a Message</h3>
           <form className="space-y-4">
             <input
               type="text"
@@ -91,9 +79,7 @@ export default function Footer() {
           <p className="text-gray-300 mb-3">📞 +2348108400962</p>
           <p className="text-gray-300 mb-3">📞 +2348024558959</p>
 
-          <p className="text-gray-300 mb-6">
-            📍 House 2, C Close, Gowon Estate, Ipaja, Lagos.
-          </p>
+          <p className="text-gray-300 mb-6">📍 House 2, C Close, Gowon Estate, Ipaja, Lagos.</p>
 
           <p className="flex items-center justify-center lg:justify-start gap-2 text-gray-300">
             <Mail size={18} className="text-[#6BBE49]" />
@@ -102,21 +88,19 @@ export default function Footer() {
         </div>
       </div>
 
-    
-      {/* Divider */}
       <div className="border-t border-gray-700 mt-16 pt-8 text-center text-gray-500 text-sm">
+        <div className="mb-4 flex justify-center gap-6 text-xs">
+          <Link href="/terms-and-conditions" className="hover:text-[#6BBE49] transition">
+            Terms & Conditions
+          </Link>
+          <span>•</span>
+          <a href="mailto:support@tafeorganics.com" className="hover:text-[#6BBE49] transition">
+            Privacy Policy
+          </a>
+        </div>
         © 2025 Táfe Organics. Developed and Designed by{" "}
         <span className="inline-flex items-center justify-center mx-1">
-
-          {/* Replace Suwebatu text with Image */}
-          <Image 
-            src="/images/suwebatu.png" 
-            alt="Suwebatu" 
-            width={90} 
-            height={40}
-            className="object-contain"
-          />
-
+          <Image src="/images/suwebatu.png" alt="Suwebatu" width={90} height={40} className="object-contain" />
         </span>
       </div>
     </footer>

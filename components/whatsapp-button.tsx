@@ -1,18 +1,54 @@
+"use client"
+
+import { useState } from "react"
+
 export default function WhatsAppButton() {
-  const phoneNumber = "2348024558959"
-  const whatsappUrl = `https://wa.me/${phoneNumber}`
+  const phoneNumber = "234810840962"
+  const [isOpen, setIsOpen] = useState(false)
+
+  const questions = [
+    { id: 1, text: "What are your products made from?" },
+    { id: 2, text: "Do you offer international shipping?" },
+    { id: 3, text: "What is your return policy?" },
+    { id: 4, text: "Are your products organic?" },
+    { id: 5, text: "How do I place an order?" },
+    { id: 6, text: "Do you have gift wrapping options?" },
+  ]
+
+  const generateWhatsAppUrl = (question: string) => {
+    const message = encodeURIComponent(question)
+    return `https://wa.me/${phoneNumber}?text=${message}`
+  }
 
   return (
-    <a
-      href={whatsappUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg transition-all hover:scale-110 flex items-center justify-center"
-      title="Chat with us on WhatsApp"
-    >
-      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371 0-.57 0-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-4.953 1.226l-.356.214-3.71-.973.992 3.63-.235.374a9.861 9.861 0 001.516 5.794c1.504 2.581 4.158 4.254 7.058 4.254h.006c3.905 0 7.1-3.185 7.1-7.1 0-1.898-.743-3.684-2.095-5.025a7.096 7.096 0 00-5.033-2.066Z" />
-      </svg>
-    </a>
+    <>
+      {isOpen && (
+        <div className="fixed bottom-24 right-6 z-50 bg-white rounded-lg shadow-2xl p-4 w-72 animate-in fade-in zoom-in-95 duration-200">
+          <h3 className="text-sm font-semibold text-gray-800 mb-3">How can we help?</h3>
+          <div className="space-y-2 max-h-64 overflow-y-auto">
+            {questions.map((question) => (
+              <a
+                key={question.id}
+                href={generateWhatsAppUrl(question.text)}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsOpen(false)}
+                className="block p-2 text-sm text-gray-700 hover:bg-green-50 rounded transition-colors cursor-pointer"
+              >
+                {question.text}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="fixed bottom-6 right-6 z-50 bg-white hover:bg-green-50 text-green-500 rounded-full p-4 shadow-lg transition-all hover:scale-110 flex items-center justify-center border-2 border-green-500"
+        title="Chat with us on WhatsApp"
+      >
+        <img src="/images/whatsapp3.webp" alt="WhatsApp" className="w-6 h-6" />
+      </button>
+    </>
   )
 }

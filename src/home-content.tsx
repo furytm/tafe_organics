@@ -202,14 +202,19 @@ className="inline-block bg-[#6BBE49] text-white px-6 py-3 md:px-8 md:py-4 text-s
             ))}
           </div>
 
-          <div className="text-center">
-            <Link href="/shop" className="bg-black text-white px-8 py-4 rounded text-lg font-semibold">
-              SHOP ALL OUR SKINCARE PRODUCTS
-            </Link>
-            <p className="mt-4 text-sm text-gray-600">
-              Free Standard Shipping on Orders Over ₦100k
-            </p>
-          </div>
+         <div className="text-center px-4">
+  <Link
+    href="/shop"
+    className="bg-black text-white w-full sm:w-auto inline-block text-center px-6 py-4 rounded text-base sm:text-lg font-semibold"
+  >
+    SHOP ALL OUR SKINCARE PRODUCTS
+  </Link>
+
+  <p className="mt-4 text-xs sm:text-sm text-gray-600">
+    Free Standard Shipping on Orders Over ₦100k
+  </p>
+</div>
+
         </div>
       </section>
 

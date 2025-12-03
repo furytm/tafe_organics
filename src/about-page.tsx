@@ -41,84 +41,144 @@ export default function AboutPageContent() {
 
   return (
     <main>
-     {/* Hero Section */}
-<div
-  className="relative w-full h-96 flex items-center justify-center bg-cover bg-center"
-  style={{
-    backgroundImage: "url('/images/abouthero.jpeg')",
-  }}
->
-
-
-  <div className="relative z-10 text-center">
-    <h1 className="text-5xl md:text-6xl playfairbold font-bold text-white">About Us</h1>
-  </div>
-</div>
-
+      {/* Hero Section */}
+      <div
+        className="relative w-full h-96 flex items-center justify-center bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/images/abouthero.jpeg')",
+        }}
+      >
+        <div className="relative z-10 text-center">
+          <h1 className="text-5xl md:text-6xl playfairbold font-bold text-white">About Us</h1>
+        </div>
+      </div>
 
       {/* Brand History */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-8">Tafe Organic Brand History</h2>
-          <div className="space-y-4 text-gray-700 leading-relaxed">
-            <p>
-              Tafe Organics was established by a mom in her desperation to help her son's skin better. With a love for
-              enterprise, Ifeoluwa Folawiyo helped enhanced the beauty of her university friends with makeup for
-              birthdays and special events. She made friends with cosmetics store owners and recommended skincare
-              products for her friends which she sold for a small token.
-            </p>
-            <p>
-              Fast forward 3 years after college, she came across a newspaper advert in 2011, on training about how to
-              make soaps and lotions. Her interest in cosmetics motivated her to attend the training. Though she never
-              got the time to practice what she learnt because she had a full time job. Four years later, she had a son
-              who suddenly developed skin allergies making his skin often dry itchy and scaly leading to bouts of
-              sleepless nights.
-            </p>
-            <p>
-              After countless visits to doctors and using different over the counter medications, she had little success
-              with healing her son's skin. Ifeoluwa's mom, concerned about her grandson gifted her African black soap,
-              Shea-butter and black palm kernel oil at Ekiti state, Nigeria. Her son's skin greatly improved and she
-              remembered she could make more with these gifts as raw materials for making other skincare products.
-            </p>
-            <p>
-              On this journey, she realized that there are many people like her son, both young and old who have
-              sensitive and allergy prone skin and that she could help them find a solution while making a business out
-              of it.
-            </p>
-            <p>
-              Ifeoluwa's desire to reach more people like her son birthed Tafe Organics, an eco conscious beauty brand
-              for dry and sensitive skin. Tafe Organics rock ltd was established in August 2021.
-            </p>
+      <section className="py-20 px-4 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-12 animate-slideUp">
+            <h2 className="text-5xl font-bold mb-4 text-center playfairbold text-[#6BBE49]">
+              Tafe Organic Brand Story
+            </h2>
+            <div className="h-1 w-24 bg-[#6BBE49] mx-auto rounded-full"></div>
+          </div>
+
+          <div className="space-y-6 text-gray-700 leading-relaxed">
+            {[
+              {
+                para: "Tafe Organics was established by a mom in her desperation to help her son's skin better. With a love for enterprise, Ifeoluwa Folawiyo helped enhanced the beauty of her university friends with makeup for birthdays and special events. She made friends with cosmetics store owners and recommended skincare products for her friends which she sold for a small token.",
+                delay: "100ms",
+              },
+              {
+                para: "Fast forward 3 years after college, she came across a newspaper advert in 2011, on training about how to make soaps and lotions. Her interest in cosmetics motivated her to attend the training. Though she never got the time to practice what she learnt because she had a full time job. Four years later, she had a son who suddenly developed skin allergies making his skin often dry itchy and scaly leading to bouts of sleepless nights.",
+                delay: "200ms",
+              },
+              {
+                para: "After countless visits to doctors and using different over the counter medications, she had little success with healing her son's skin. Ifeoluwa's mom, concerned about her grandson gifted her African black soap, Shea-butter and black palm kernel oil at Ekiti state, Nigeria. Her son's skin greatly improved and she remembered she could make more with these gifts as raw materials for making other skincare products.",
+                delay: "300ms",
+              },
+              {
+                para: "On this journey, she realized that there are many people like her son, both young and old who have sensitive and allergy prone skin and that she could help them find a solution while making a business out of it.",
+                delay: "400ms",
+              },
+              {
+                para: "Ifeoluwa's desire to reach more people like her son birthed Tafe Organics, an eco conscious beauty brand for dry and sensitive skin. Tafe Organics rock ltd was established in August 2021.",
+                delay: "500ms",
+              },
+            ].map((item, idx) => (
+              <p
+                key={idx}
+                style={{
+                  animation: `slideUp 0.8s ease-out ${item.delay} forwards`,
+                  opacity: 0,
+                }}
+                className="text-lg leading-8 text-gray-800 border-l-4 border-[#6BBE49] pl-6 py-2 hover:bg-green-50 transition-all duration-300 rounded-r-lg"
+              >
+                {item.para}
+              </p>
+            ))}
           </div>
         </div>
       </section>
-  {/* Team Members */}
-      <section className="py-16 px-4 bg-gray-50">
+
+      {/* Team Members */}
+      <section className="py-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12">Meet Our Team Members</h2>
+          <div className="mb-16 animate-slideUp">
+            <h2 className="text-5xl font-bold text-center playfairbold text-[#6BBE49] mb-4">Meet Our Team</h2>
+            <div className="h-1 w-24 bg-[#6BBE49] mx-auto rounded-full"></div>
+          </div>
+
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/main%20staff%20image-RAq7rqYooPDdwom1lUGg7owSKnnsW5.jpg"
-                alt="Ifeoluwa Folawiyo"
-                className="w-full h-96 object-cover rounded-lg mb-4"
-              />
-              <h3 className="text-xl font-bold">Ifeoluwa Folawiyo</h3>
-              <p className="text-amber-700 font-semibold">Managing Director</p>
+            {/* Lead Member */}
+            <div
+              className="group text-center animate-scaleIn"
+              style={{
+                animation: "scaleIn 0.6s ease-out forwards",
+              }}
+            >
+              <div className="relative overflow-hidden rounded-xl mb-6 shadow-lg transform transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105">
+                <img
+                  src="/images/main-20staff-20image.jpg"
+                  alt="Ifeoluwa Folawiyo"
+                  className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                  <div className="text-white">
+                    <p className="text-sm opacity-90">Managing Director</p>
+                  </div>
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 playfairbold">Ifeoluwa Folawiyo</h3>
+              <p className="text-[#6BBE49] font-semibold mt-2">Founder & Managing Director</p>
+              <p className="text-gray-600 text-sm mt-2">
+                Passionate about creating natural, eco-conscious skincare solutions
+              </p>
             </div>
-            <div className="text-center">
-              <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2ND%20Staff%20image-Wp0REw0IWsUw7o61CXxddaYY7LWfKa.jpg"
-                alt="Team Group 1"
-                className="w-full h-96 object-cover rounded-lg mb-4"
-              />
+
+            {/* Team Members */}
+            <div
+              className="group text-center animate-scaleIn"
+              style={{
+                animation: "scaleIn 0.6s ease-out 100ms forwards",
+                opacity: 0,
+              }}
+            >
+              <div className="relative overflow-hidden rounded-xl mb-6 shadow-lg transform transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105">
+                <img
+                  src="/images/2nd-20staff-20image.jpg"
+                  alt="Team Member"
+                  className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 playfairbold">Our Team</h3>
+              <p className="text-[#6BBE49] font-semibold mt-2">Dedicated Professionals</p>
+              <p className="text-gray-600 text-sm mt-2">
+                Committed to excellence in product quality and customer service
+              </p>
             </div>
-            <div className="text-center">
-              <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3rd%20staff%20image-kLi0p2B1kIJEUM7V7xWtP6Wr2Xezr5.jpg"
-                alt="Team Group 2"
-                className="w-full h-96 object-cover rounded-lg mb-4"
-              />
+
+            <div
+              className="group text-center animate-scaleIn"
+              style={{
+                animation: "scaleIn 0.6s ease-out 200ms forwards",
+                opacity: 0,
+              }}
+            >
+              <div className="relative overflow-hidden rounded-xl mb-6 shadow-lg transform transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105">
+                <img
+                  src="/images/3rd-20staff-20image.jpg"
+                  alt="Team Member"
+                  className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 playfairbold">Growing Together</h3>
+              <p className="text-[#6BBE49] font-semibold mt-2">Team Collaboration</p>
+              <p className="text-gray-600 text-sm mt-2">
+                Building a community dedicated to organic beauty and wellness
+              </p>
             </div>
           </div>
         </div>
@@ -131,7 +191,7 @@ export default function AboutPageContent() {
           <div className="grid md:grid-cols-2 gap-12">
             <div className="flex items-center justify-center">
               <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/SHEA%20COCOA%20BALM-NPPV5p0XqOXJD9p1hTjfig3WfHQVR3.jpg"
+                src="/images/shea-20cocoa-20balm.jpg"
                 alt="Shea Cocoa Balm"
                 className="w-full rounded-lg shadow-lg"
               />
@@ -162,7 +222,8 @@ export default function AboutPageContent() {
           </div>
         </div>
       </section>
-       {/* FAQ Section */}
+
+      {/* FAQ Section */}
       <section className="py-16 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
           <div className="bg-gray-800 text-white p-12 rounded-lg mb-8">
@@ -214,55 +275,48 @@ export default function AboutPageContent() {
           </div>
         </div>
       </section>
-  {/* MAP SECTION */}
-<section className="py-20 bg-secondary">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    
-    <h2 className="font-serif text-4xl font-bold text-primary mb-12 text-center animate-fade-in-up">
-      Find Us
-    </h2>
 
-    <div className="bg-background rounded-lg overflow-hidden shadow-lg animate-scale-in">
+      {/* MAP SECTION */}
+      <section className="py-20 bg-secondary">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="font-serif text-4xl font-bold text-primary mb-12 text-center animate-fade-in-up playfairbold">
+            Find Us
+          </h2>
 
-      {/* Google Map */}
-      <div className="w-full h-[300px]">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.356500024856!2d3.2869646735048237!3d6.602543222242809!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b90508df8195b%3A0xedd4d8a831e92efc!2s2%20C%20%26%20I%20Cl%2C%20Idimu%2C%20Lagos%20102213%2C%20Lagos!5e0!3m2!1sen!2sng!4v1764437313918!5m2!1sen!2sng"
-          width="100%"
-          height="100%"
-          style={{ border: 0 }}
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        />
-      </div>
+          <div className="bg-background rounded-lg overflow-hidden shadow-lg animate-scale-in">
+            {/* Google Map */}
+            <div className="w-full h-[300px]">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.356500024856!2d3.2869646735048237!3d6.602543222242809!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b90508df8195b%3A0xedd4d8a831e92efc!2s2%20C%20%26%20I%20Cl%2C%20Idimu%2C%20Lagos%20102213%2C%20Lagos!5e0!3m2!1sen!2sng!4v1764437313918!5m2!1sen!2sng"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
 
-      {/* Map Info Section */}
-      <div className="p-6 text-center">
-        <h3 className="text-xl font-semibold mb-2">Our Location</h3>
+            {/* Map Info Section */}
+            <div className="p-6 text-center">
+              <h3 className="text-xl  playfairreg font-semibold mb-2">Our Location</h3>
 
-        <p className="mb-4">
-          House 2, C Close, Gowon Estate, Ipaja, Lagos.
-        </p>
+              <p className="mb-4 playfairreg ">House 2, C Close, Gowon Estate, Ipaja, Lagos.</p>
 
-        <a
-          href="https://maps.google.com/?q=House 2, C Close, Gowon Estate, Ipaja, Lagos"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block bg-primary text-secondary hover:bg-primary/90 
+              <a
+                href="https://maps.google.com/?q=House 2, C Close, Gowon Estate, Ipaja, Lagos"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block  bg-[#6BBE49] text-secondary hover:bg-primary/90 
                      font-medium px-6 py-2 rounded-full transition-all duration-300 
                      hover:scale-105"
-        >
-          Get Directions
-        </a>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-    
+              >
+                Get Directions
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   )
 }

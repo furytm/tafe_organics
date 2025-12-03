@@ -2,16 +2,16 @@
 
 import { useState } from "react"
 import { productsData } from "@/lib/products-data"
-import ProductCard from "@/components/product-card" // Import ProductCard component
+import ProductCard from "@/components/product-card"
 
 export default function ShopPageContent() {
   const [sortBy, setSortBy] = useState("popularity")
 
   return (
     <main>
-    {/* PROMO BANNER */}
+      {/* PROMO BANNER */}
       <div className=" bg-[#6BBE49] text-center py-3 text-sm playfairreg font-semibold text-gray-800">
-        ★ ★ ★ ★ ★   Free Standard Shipping on Orders Over ₦100k.
+        ★ ★ ★ ★ ★ Free Standard Shipping on Orders Over ₦100k.
       </div>
 
       {/* Shop Header with Title and Sort */}

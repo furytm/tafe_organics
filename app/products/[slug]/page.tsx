@@ -7,4 +7,3 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const resolvedParams = await params
   return <ProductPageContent params={resolvedParams} />
 }
-
