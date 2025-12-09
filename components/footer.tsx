@@ -93,7 +93,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-gray-700 mt-16 pt-8 text-center text-gray-500 text-sm">
-        <div className="mb-4 flex justify-center gap-6 text-xs">
+        <div className="mb-4 flex justify-center gap-6 text-xl">
           <Link href="/terms-and-conditions" className="hover:text-[#6BBE49] transition">
             Terms & Conditions
           </Link>
