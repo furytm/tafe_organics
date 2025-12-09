@@ -2,27 +2,18 @@
 
 import { useState } from "react"
 import { productsData } from "@/lib/products-data"
-
-
+import { useCart } from "@/contexts/cart-context"
+import { Check, ShoppingCart } from "lucide-react"
 
 export default function ProductPageContent({ params }: { params: { slug: string } }) {
-  
-  console.log("Slug from URL:", params.slug)
-  console.log("Available slugs:", productsData.map(p => p.slug))
+  const product = productsData.find((p) => p.slug === params.slug)
 
-  const product = productsData.find((p) => {
-    console.log(
-      " Looking for slug:",
-      params.slug,
-      "Available slugs:",
-      productsData.map((p) => p.slug),
-    )
-    return p.slug === params.slug
-  })
-    console.log("Matched product:", product);
   const [quantity, setQuantity] = useState(1)
   const [selectedVariant, setSelectedVariant] = useState(0)
   const [activeTab, setActiveTab] = useState("description")
+  const [addedToCart, setAddedToCart] = useState(false)
+
+  const { addToCart } = useCart()
 
   if (!product) {
     return (
@@ -34,14 +25,19 @@ export default function ProductPageContent({ params }: { params: { slug: string 
     )
   }
 
-  const relatedProducts = productsData.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4)
+  const handleAddToCart = () => {
+    addToCart(product, selectedVariant, quantity)
+    setAddedToCart(true)
+    setTimeout(() => setAddedToCart(false), 2000)
+    // Cart only opens when user clicks cart icon in header
+  }
+
+  const relatedProducts = productsData.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4)
   const currentVariant = product.variants?.[selectedVariant]
   const currentPrice = currentVariant?.price || 0
 
   return (
     <main>
-      
-
       {/* Product Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
@@ -82,17 +78,44 @@ export default function ProductPageContent({ params }: { params: { slug: string 
             {/* Quantity and Add to Cart */}
             <div className="flex gap-4 mb-6">
               <div className="flex items-center border border-gray-300 rounded">
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="px-4 py-2 text-gray-600">−</button>
-                <input type="text" value={quantity} readOnly className="w-12 text-center border-l border-r border-gray-300" />
-                <button onClick={() => setQuantity(quantity + 1)} className="px-4 py-2 text-gray-600">+</button>
+                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="px-4 py-2 text-gray-600">
+                  −
+                </button>
+                <input
+                  type="text"
+                  value={quantity}
+                  readOnly
+                  className="w-12 text-center border-l border-r border-gray-300"
+                />
+                <button onClick={() => setQuantity(quantity + 1)} className="px-4 py-2 text-gray-600">
+                  +
+                </button>
               </div>
-              <button className="flex-1 bg-[#6B4C8A] text-white font-bold py-2 rounded hover:bg-[#5a3f73] transition">
-                Add to cart
+              <button
+                onClick={handleAddToCart}
+                className={`flex-1 font-bold py-2 rounded transition flex items-center justify-center gap-2 text-white ${
+                  addedToCart ? "bg-green-600 hover:bg-green-700" : "bg-[#6BBE49] hover:bg-[#5aaa3f]"
+                }`}
+              >
+                {addedToCart ? (
+                  <>
+                    <Check size={18} />
+                    Added to cart
+                  </>
+                ) : (
+                  <>
+                    <ShoppingCart size={18} />
+                    Add to cart
+                  </>
+                )}
               </button>
             </div>
 
             <div className="pt-6 border-t border-gray-200">
-              <p className="text-gray-700"><span className="font-semibold">Category:</span> <span className="text-[#C4752B]">{product.category}</span></p>
+              <p className="text-gray-700">
+                <span className="font-semibold">Category:</span>{" "}
+                <span className="text-[#C4752B]">{product.category}</span>
+              </p>
             </div>
           </div>
         </div>
@@ -100,15 +123,21 @@ export default function ProductPageContent({ params }: { params: { slug: string 
         {/* Tabs */}
         <div className="border-b border-gray-200 mb-8">
           <div className="flex gap-8">
-            {["description", "additional", "reviews"].map(tab => (
+            {["description", "additional", "reviews"].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={`py-4 px-2 font-semibold capitalize border-b-2 transition ${
-                  activeTab === tab ? "border-[#C4752B] text-gray-900" : "border-transparent text-gray-600 hover:text-gray-900"
+                  activeTab === tab
+                    ? "border-[#C4752B] text-gray-900"
+                    : "border-transparent text-gray-600 hover:text-gray-900"
                 }`}
               >
-                {tab === "description" ? "Description" : tab === "additional" ? "Additional Information" : "Reviews (0)"}
+                {tab === "description"
+                  ? "Description"
+                  : tab === "additional"
+                    ? "Additional Information"
+                    : "Reviews (0)"}
               </button>
             ))}
           </div>
@@ -121,10 +150,37 @@ export default function ProductPageContent({ params }: { params: { slug: string 
               <h2 className="text-xl font-bold text-gray-900 mb-4">Description</h2>
               <h3 className="font-semibold text-gray-900 mb-3">How to use</h3>
               <p className="text-gray-700 mb-4">{product.howToUse}</p>
+
+              <h3 className="font-semibold text-gray-900 mb-3 mt-6">Key Benefits</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+                {product.benefits.map((benefit, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-start gap-3 p-3 bg-gradient-to-r from-[#6BBE49]/10 to-transparent rounded-lg border-l-4 border-[#6BBE49] hover:shadow-md transition-shadow"
+                  >
+                    <span className="text-[#6BBE49] font-bold text-lg flex-shrink-0 mt-0.5">✓</span>
+                    <p className="text-gray-700">{benefit}</p>
+                  </div>
+                ))}
+              </div>
+
+              <h3 className="font-semibold text-gray-900 mb-3 mt-6">What Makes It Special</h3>
+              <div className="space-y-2 mb-6">
+                {product.specialFeatures.map((feature, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-start gap-3 p-2 bg-amber-50 rounded-lg border border-amber-100 hover:bg-amber-100 transition-colors"
+                  >
+                    <span className="text-[#C4752B] font-bold flex-shrink-0 mt-0.5">•</span>
+                    <p className="text-gray-700">{feature}</p>
+                  </div>
+                ))}
+              </div>
+
               <h3 className="font-semibold text-gray-900 mb-3">Ingredients:</h3>
               <p className="text-gray-700 mb-4">{product.ingredients}</p>
               <h3 className="font-semibold text-gray-900 mb-3">Related categories:</h3>
-              <p className="text-gray-700">{product.relatedCategories}</p>
+              <p className="text-gray-700">{product.relatedCategories?.join(", ")}</p>
             </div>
           )}
           {activeTab === "additional" && (
@@ -133,11 +189,17 @@ export default function ProductPageContent({ params }: { params: { slug: string 
               <div className="space-y-3">
                 {currentVariant && (
                   <>
-                    <p><span className="font-semibold">Size:</span> {currentVariant.weight}</p>
-                    <p><span className="font-semibold">Price:</span> ₦{currentPrice.toLocaleString()}.00</p>
+                    <p>
+                      <span className="font-semibold">Size:</span> {currentVariant.weight}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Price:</span> ₦{currentPrice.toLocaleString()}.00
+                    </p>
                   </>
                 )}
-                <p><span className="font-semibold">Category:</span> {product.category}</p>
+                <p>
+                  <span className="font-semibold">Category:</span> {product.category}
+                </p>
               </div>
             </div>
           )}
@@ -153,11 +215,15 @@ export default function ProductPageContent({ params }: { params: { slug: string 
         {relatedProducts.length > 0 && (
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Related products</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {relatedProducts.map(relatedProduct => (
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {relatedProducts.map((relatedProduct) => (
                 <a key={relatedProduct.id} href={`/products/${relatedProduct.slug}`} className="group">
                   <div className="bg-gray-100 rounded-lg overflow-hidden h-48 mb-3">
-                    <img src={relatedProduct.image || "/placeholder.svg"} alt={relatedProduct.name} className="w-full h-full object-cover group-hover:scale-105 transition" />
+                    <img
+                      src={relatedProduct.image || "/placeholder.svg"}
+                      alt={relatedProduct.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition"
+                    />
                   </div>
                   <h3 className="font-bold text-gray-900 text-sm mb-2">{relatedProduct.name}</h3>
                   {relatedProduct.variants && relatedProduct.variants.length > 0 ? (

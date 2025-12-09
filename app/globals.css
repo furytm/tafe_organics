@@ -53,6 +53,18 @@
     }
   }
 
+  /* Added slideDown animation for top-to-bottom transitions */
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   @keyframes scaleIn {
     from {
       opacity: 0;
@@ -94,6 +106,11 @@
 
   .animate-slideUp {
     animation: slideUp 0.8s ease-out;
+  }
+
+  /* Added slideDown animation utility */
+  .animate-slideDown {
+    animation: slideDown 0.8s ease-out;
   }
 
   .animate-scaleIn {

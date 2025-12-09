@@ -1,19 +1,19 @@
 export type Product = {
   id: number
-   slug: string
-   name: string
-   category: string
-   image: string
-   tagline: string
-   description: string
-   howToUse: string
-   ingredients: string
-   benefits: string[]
-   specialFeatures: string[]
-   tags: string[]
-   variants: Array<{ weight: string; price: number }>
-   relatedCategories?: string[]
- }
+  slug: string
+  name: string
+  category: string
+  image: string
+  tagline: string
+  description: string
+  howToUse: string
+  ingredients: string
+  benefits: string[]
+  specialFeatures: string[]
+  tags: string[]
+  variants: Array<{ weight: string; price: number }>
+  relatedCategories?: string[]
+}
 
 export const productsData = [
   // SOAPS (6 products)
@@ -22,194 +22,273 @@ export const productsData = [
     slug: "charcoal-coffee-soap",
     name: "Charcoal & Coffee Soap",
     category: "Soaps",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Coffee%2Btea%20tree%20soap-sXZLtbgenvGa3Ox5lOnc4FHkFYiJkh.jpg",
+    image: "/images/coffee-2btea-20tree-20soap.jpg",
     tagline: "Exfoliating | Detoxifying | Brightening | Natural Skincare",
-    description: "Reveal glowing, even-toned skin with our Butter-Rich Coffee + Tea Tree Soap — a luxurious bar made with raw coffee, activated charcoal, and tea tree oil. This gentle exfoliating soap helps remove dead skin cells, repair damaged skin, and balance oil production without stripping moisture from your skin. Perfect for: Dull, uneven, oily, or acne prone skin. Great for daily use.",
-    howToUse: "Wet skin with lukewarm water. Lather the soap bar between your hands or with a loofah. Massage gently over face and body. Rinse thoroughly.",
+    description:
+      "Reveal glowing, even-toned skin with our Butter-Rich Coffee + Tea Tree Soap — a luxurious bar made with raw coffee, activated charcoal, and tea tree oil. This gentle exfoliating soap helps remove dead skin cells, repair damaged skin, and balance oil production without stripping moisture from your skin.",
+    howToUse:
+      "Wet skin with lukewarm water. Lather the soap bar between your hands or with a loofah. Massage gently over face and body. Rinse thoroughly.",
     ingredients: "Raw coffee grounds, activated charcoal, tea tree oil, shea butter, coconut oil, vitamin E",
     benefits: [
       "Gently exfoliates for radiant, smoother skin",
       "Helps fade the effects of harsh skincare or bleaching products",
       "Balances oily skin with tea tree's natural properties",
       "Creamy, hydrating lather that cleanses deeply",
-      "Supports skin healing and glow-up naturally"
+      "Supports skin healing and glow-up naturally",
     ],
     specialFeatures: [
       "100% Preservative-free & sulfate-free",
       "Plastic-free, recyclable packaging",
       "Handmade by women",
       "Ethically and sustainably sourced in Africa",
-      "Made with skin-loving, nutrient-rich ingredients"
+      "Made with skin-loving, nutrient-rich ingredients",
     ],
-    tags: ["coffee soap", "exfoliating soap", "tea tree soap", "natural skincare", "charcoal soap", "eco-friendly", "handmade in Africa", "skin brightening", "sulfate free", "plastic free"],
+    tags: [
+      "coffee soap",
+      "exfoliating soap",
+      "tea tree soap",
+      "natural skincare",
+      "charcoal soap",
+      "eco-friendly",
+      "handmade in Africa",
+      "skin brightening",
+      "sulfate free",
+      "plastic free",
+    ],
     variants: [
       { weight: "170g", price: 5000 },
       { weight: "40g", price: 1500 },
-      { weight: "3-pack", price: 13800 }
-    ]
-  ,relatedCategories: ["Soaps", "Skincare"],
-
+      { weight: "Multi Pack (3pcs)", price: 13800 },
+    ],
+    relatedCategories: ["Soaps", "Skincare"],
   },
   {
     id: 2,
     slug: "african-black-soap-bar",
     name: "African Black Soap Bar",
     category: "Soaps",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Raw%20African%20Blacksoap-rbmF5iSZKBRpoa1NjuumcyPyLWbPmd.jpg",
+    image: "/images/raw-20african-20blacksoap.jpg",
     tagline: "Deep Cleansing | Clarifying | Balancing | Natural Skincare",
-    description: "Our Authentic African Black Soap Bar is a traditional, plant-based cleanser handcrafted with nutrient-rich African ingredients. Known for its deep cleansing and skin-balancing properties, this gentle yet powerful bar helps clarify the skin, reduce blemishes, and improve overall texture. Used for centuries by African communities for its powerful cleansing and healing properties.",
-    howToUse: "Wet skin with lukewarm water. Lather the soap bar between your hands or with a loofah. Massage gently over face and body. Rinse thoroughly.",
+    description:
+      "Our Authentic African Black Soap Bar is a traditional, plant-based cleanser handcrafted with nutrient-rich African ingredients. Known for its deep cleansing and skin-balancing properties, this gentle yet powerful bar helps clarify the skin, reduce blemishes, and improve overall texture. Perfect for daily use and suitable for all skin types, especially acne-prone, oily, or troubled skin.",
+    howToUse:
+      "Wet skin with lukewarm water. Lather the soap bar between your hands or with a loofah. Massage gently over face and body. Rinse thoroughly.",
     ingredients: "Plantain skin ash, coconut oil, shea butter, palm oil, cocoa pod ash, natural plant extracts",
     benefits: [
-      "Deep cleansing action removes impurities and buildup",
-      "Balances skin pH naturally",
-      "Reduces blemishes and breakouts significantly",
-      "Improves overall skin texture and clarity",
-      "Treats various skin conditions including eczema",
-      "Rich in minerals and antioxidants"
+      "Deep cleanses without over-drying",
+      "Helps reduce acne, blemishes, and clogged pores",
+      "Supports a clearer, smoother, more balanced complexion",
+      "Naturally reduces excess oil and impurities",
+      "Gentle, soothing, and suitable for everyday use",
     ],
     specialFeatures: [
-      "100% Traditional African formulation",
-      "Handmade in small batches",
-      "No synthetic chemicals or preservatives",
-      "Fair trade and ethically sourced",
-      "Supports African communities and artisans"
+      "100% Preservative-free, sulfate-free & fragrance-free",
+      "Packaged in plastic-free, recyclable boxes",
+      "Handmade by women using traditional African techniques",
+      "Ethically and sustainably sourced ingredients",
+      "Rich in vitamins, antioxidants & plant-based goodness",
     ],
-    tags: ["African soap", "deep cleansing", "clarifying", "natural", "traditional", "blemish control", "eco-friendly", "handmade"],
+    tags: [
+      "african black soap",
+      "organic black soap",
+      "natural cleanser",
+      "acne soap",
+      "clarifying soap",
+      "handmade soap",
+      "eco-friendly beauty",
+      "African skincare",
+      "sulfate free soap",
+      "plastic free",
+    ],
     variants: [
       { weight: "170g", price: 5000 },
       { weight: "40g", price: 1500 },
-      { weight: "3-pack", price: 13800 }
-    ],relatedCategories: ["Soaps", "Skincare"],
-
+      { weight: "Multi Pack (3pcs)", price: 13800 },
+    ],
+    relatedCategories: ["Soaps", "Skincare"],
   },
   {
     id: 3,
     slug: "shea-butter-blend-soap",
     name: "Shea Butter Blend Soap",
     category: "Soaps",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Shea%20butter%20soap-CDkZID9XgYBh7OWGdSvp75BxUs1P3t.jpg",
-    tagline: "Nourishing | Moisturizing | Gentle | Natural Skincare",
-    description: "Rich blend of African shea butter and nourishing oils. Gently cleanses while maintaining your skin's natural moisture balance. This luxurious soap is perfect for those seeking deep nourishment without harsh chemicals. Ideal for daily cleansing that leaves skin soft, supple, and naturally radiant.",
-    howToUse: "Wet skin with lukewarm water. Lather the soap bar between your hands or with a loofah. Massage gently over face and body. Rinse thoroughly.",
+    image: "/images/shea-20butter-20soap.jpg",
+    tagline: "Moisturizing | Soothing | Gentle | Sensitive Skin Friendly",
+    description:
+      "Our Shea Butter Blend Soap is a gentle, ultra-moisturizing bar specially crafted for dry, sensitive, or eczema-prone skin. Made with raw shea butter, it forms a rich, creamy lather that soothes irritation, restores softness, and hydrates deeply — perfect for daily use on delicate skin.",
+    howToUse:
+      "Wet skin with lukewarm water. Lather the soap bar between your hands or with a loofah. Massage gently over face and body. Rinse thoroughly.",
     ingredients: "Raw shea butter, coconut oil, palm kernel oil, vitamin E, natural fragrance",
     benefits: [
-      "Deeply moisturizes and nourishes",
-      "Prevents dryness and maintains natural moisture barrier",
-      "Soothes sensitive and irritated skin",
-      "Rich creamy lather for luxurious cleansing",
-      "Non-stripping cleanser that doesn't over-dry",
-      "Leaves skin feeling soft and silky"
+      "Calms eczema and soothes irritated skin",
+      "Deeply moisturizes without clogging pores",
+      "Gentle enough for babies and sensitive skin",
+      "Creamy lather leaves skin soft and nourished",
+      "Balances skin naturally",
     ],
     specialFeatures: [
-      "100% Natural ingredients",
-      "Handmade with premium shea butter",
-      "Sulfate-free and cruelty-free",
-      "Sustainably sourced from Africa",
-      "Luxurious lather that lasts longer"
+      "Preservative-free & sulfate-free",
+      "Plastic-free, recyclable packaging",
+      "Handmade by women",
+      "Ethically and sustainably sourced in Africa",
+      "Made with pure, nourishing ingredients",
     ],
-    tags: ["shea butter soap", "moisturizing", "gentle cleansing", "sensitive skin", "natural", "nourishing"],
+    tags: [
+      "shea butter soap",
+      "eczema relief",
+      "moisturizing soap",
+      "gentle cleanser",
+      "natural skincare",
+      "handmade soap",
+      "African skincare",
+      "eco-friendly beauty",
+      "multipurpose balm",
+      "moisturizing balm",
+    ],
     variants: [
       { weight: "170g", price: 5000 },
       { weight: "40g", price: 1500 },
-      { weight: "3-pack", price: 13800 }
-    ],relatedCategories: ["Soaps", "Skincare"],
+      { weight: "Multi Pack (3pcs)", price: 13800 },
+    ],
+    relatedCategories: ["Soaps", "Skincare"],
   },
   {
     id: 4,
     slug: "carrot-oil-blend-soap",
     name: "Carrot Oil Blend Soap",
     category: "Soaps",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Carrot-Soap-i7OmXx8n82d9xnnK8cOiuoMZYIWmw9.jpg",
-    tagline: "Brightening | Revitalizing | Antioxidant | Natural Skincare",
-    description: "Enriched with beta-carotene and vitamin A to brighten and revitalize dull, tired skin. This luxurious soap helps improve skin texture, reduce blemishes, and restore your skin's natural radiance. Perfect for those looking to enhance their complexion with natural ingredients.",
-    howToUse: "Wet skin with lukewarm water. Lather the soap bar between your hands or with a loofah. Massage gently over face and body. Rinse thoroughly.",
-    ingredients: "Carrot seed oil, carrot root extract, shea butter, coconut oil, vitamin A, natural fragrance, vitamin E",
+    image: "/images/carrot-soap.jpg",
+    tagline: "Brightening | Hydrating | Gentle | Natural Skincare",
+    description:
+      "Our Nourishing Carrot Glow Soap is a creamy, moisturizing bar made with skin-loving natural ingredients to brighten and smooth your skin. Rich in nutrients from carrot extracts, this gentle cleanser helps hydrate, balance oily skin, and promote a more radiant, even tone. Perfect for daily use and suitable for all skin types — especially dull, tired, or uneven skin.",
+    howToUse:
+      "Wet skin with lukewarm water. Lather the soap bar between your hands or with a loofah. Massage gently over face and body. Rinse thoroughly.",
+    ingredients:
+      "Carrot seed oil, carrot root extract, shea butter, coconut oil, vitamin A, natural fragrance, vitamin E",
     benefits: [
-      "Brightens dull and tired-looking skin",
-      "Reduces the appearance of blemishes and scars",
-      "Improves overall skin texture and smoothness",
-      "Rich in antioxidants for skin protection",
-      "Promotes natural glow and radiance",
-      "Gentle on sensitive skin"
+      "Boosts skin radiance and glow",
+      "Hydrates and softens with creamy, non-drying lather",
+      "Helps even out skin tone and reduce dullness",
+      "Balances oily skin naturally",
+      "Safe, gentle, and moisturizing for everyday use",
     ],
     specialFeatures: [
-      "Pure carrot seed oil for natural brightening",
-      "High in beta-carotene and vitamin A",
-      "No synthetic dyes or chemicals",
-      "Handmade in small artisan batches",
-      "Long-lasting, effective lather"
+      "100% Preservative-free & sulfate-free",
+      "Packaged in plastic-free, recyclable boxes",
+      "Handmade by women",
+      "Ethically and sustainably sourced in Africa",
+      "Made with rich, nourishing, plant-based ingredients",
     ],
-    tags: ["carrot soap", "brightening", "vitamin A", "antioxidant", "natural glow", "blemish control"],
+    tags: [
+      "carrot soap",
+      "skin brightening soap",
+      "glowing skin",
+      "natural skincare",
+      "handmade soap",
+      "eco-friendly beauty",
+      "African skincare",
+      "sulfate free soap",
+      "plastic free",
+      "moisturizing soap",
+    ],
     variants: [
       { weight: "170g", price: 5000 },
       { weight: "40g", price: 1500 },
-      { weight: "3-pack", price: 13800 }
-    ],relatedCategories: ["Soaps", "Skincare"],
+      { weight: "Multi Pack (3pcs)", price: 13800 },
+    ],
+    relatedCategories: ["Soaps", "Skincare"],
   },
   {
     id: 5,
     slug: "oats-honey-soap",
     name: "Oats & Honey Soap",
     category: "Soaps",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Oats%20%2B%20Honey2-5Uo8rvbc3x1UVDhcuiTgC4CfWJxHJO.jpg",
-    tagline: "Soothing | Calming | Gentle | Natural Skincare",
-    description: "Combines soothing colloidal oatmeal with nature's golden honey for a skin-calming bar. Perfect for sensitive, itchy, or irritated skin. This gentle formula provides relief while nourishing your skin with natural ingredients that have been trusted for centuries.",
-    howToUse: "Wet skin with lukewarm water. Lather the soap bar between your hands or with a loofah. Massage gently over face and body. Rinse thoroughly.",
-    ingredients: "Oatmeal (colloidal oats), raw honey, shea butter, coconut oil, honey extract, vitamin E, natural fragrance",
+    image: "/images/oats-20-2b-20honey2.jpg",
+    tagline: "Soothing | Moisturizing | Gentle Exfoliation | Sensitive Skin Safe",
+    description:
+      "Our Oats + Honey Soap is a soothing, ultra-gentle exfoliating bar made to nourish and hydrate dry, sensitive, or eczema-prone skin. Formulated with wild honey and ground oats, this creamy soap calms irritation, reduces flakes, and leaves skin soft, balanced, and glowing. Perfect for extremely dry or sensitive skin, and safe for daily use.",
+    howToUse:
+      "Wet skin with lukewarm water. Lather the soap bar between your hands or with a loofah. Massage gently over face and body. Rinse thoroughly.",
+    ingredients:
+      "Oatmeal (colloidal oats), raw honey, shea butter, coconut oil, honey extract, vitamin E, natural fragrance",
     benefits: [
-      "Gently exfoliates without harsh scrubbing",
-      "Soothes irritated and inflamed skin",
-      "Reduces itching and discomfort effectively",
-      "Moisturizes naturally with honey and shea",
-      "Promotes healthy skin barrier function",
-      "Safe for eczema-prone and sensitive skin"
+      "Gently exfoliates with oats to remove dry flakes",
+      "Soothes eczema and nourishes irritated skin",
+      "Deeply moisturizes with wild honey",
+      "Balances oily skin without stripping natural oils",
+      "Creamy lather cleanses while softening the skin",
     ],
     specialFeatures: [
-      "Raw honey for natural antibacterial properties",
-      "Colloidal oatmeal for gentle exfoliation",
-      "Hypoallergenic formula for sensitive skin",
-      "No harsh chemicals or additives",
-      "Dermatologist-recommended for eczema relief"
+      "100% Preservative-free & sulfate-free",
+      "Plastic-free, recyclable packaging",
+      "Handmade by women",
+      "Ethically and sustainably sourced in Africa",
+      "Made with super-nourishing, skin-loving ingredients",
     ],
-    tags: ["oatmeal soap", "honey soap", "sensitive skin", "eczema relief", "soothing", "itchy skin", "calming"],
+    tags: [
+      "oats and honey soap",
+      "eczema soap",
+      "gentle exfoliating soap",
+      "natural skincare",
+      "dry skin relief",
+      "African handmade soap",
+      "sulfate free soap",
+      "plastic free packaging",
+      "moisturizing soap",
+      "sensitive skin",
+    ],
     variants: [
       { weight: "170g", price: 5000 },
       { weight: "40g", price: 1500 },
-      { weight: "3-pack", price: 13800 }
-    ],relatedCategories: ["Soaps", "Skincare"],
+      { weight: "Multi Pack (3pcs)", price: 13800 },
+    ],
+    relatedCategories: ["Soaps", "Skincare"],
   },
   {
     id: 6,
     slug: "neem-oil-blend-soap",
     name: "Neem Oil Blend Soap",
     category: "Soaps",
-    image: "/images/shea-butter-soap-bar-luxury-skincare.jpg",
-    tagline: "Antibacterial | Antifungal | Clarifying | Natural Skincare",
-    description: "Powerful neem oil blend soap formulated for acne-prone and oily skin. With natural antibacterial and antifungal properties, this soap helps combat blemishes and balance oil production while maintaining skin health.",
-    howToUse: "Wet skin with lukewarm water. Lather the soap bar between your hands or with a loofah. Massage gently over face and body. Rinse thoroughly.",
+    image: "/images/Neemoilblendsoap.jpg",
+    tagline: "Clarifying | Healing | Anti-Blemish | Herbal Skincare",
+    description:
+      "Our Neem Oil Blend Soap is a powerful herbal bar infused with pure neem oil, known for its antibacterial, anti-inflammatory, and skin-balancing properties. This soap is designed to target blemishes, body acne, and skin irritation while still being gentle enough for daily use. Blended with skin-soothing oils and natural butters, it helps detoxify the skin, reduce excess oil, and calm conditions like eczema and breakouts — all without drying you out. Perfect for oily, acne-prone, or irritated skin.",
+    howToUse:
+      "Wet skin with lukewarm water. Lather the soap bar between your hands or with a loofah. Massage gently over face and body. Rinse thoroughly.",
     ingredients: "Neem oil, tea tree oil, shea butter, coconut oil, vitamin E",
     benefits: [
-      "Antibacterial action fights acne-causing bacteria",
-      "Antifungal properties prevent fungal infections",
-      "Effectively reduces acne and blemishes",
-      "Balances oily skin naturally",
-      "Soothes inflammation and redness",
-      "Gentle enough for daily use"
+      "Fights acne and blemishes naturally",
+      "Soothes inflamed, itchy, or irritated skin",
+      "Balances sebum production for clearer skin",
+      "Deeply cleanses while maintaining skin hydration",
+      "Great for face and body use",
     ],
     specialFeatures: [
-      "Pure neem oil sourced from India",
-      "Combined with tea tree for enhanced benefits",
-      "No benzoyl peroxide or harsh chemicals",
-      "Handcrafted in small batches",
-      "Safe for acne-prone sensitive skin"
+      "Made with pure Neem oil, known for its medicinal skincare benefits",
+      "100% preservative-free & sulphate-free",
+      "Packaged in plastic-free, recyclable boxes",
+      "Handmade by women",
+      "Ethically and sustainably sourced in Africa",
+      "Infused with herbal, super-nourishing ingredients for radiant, healthy skin",
     ],
-    tags: ["neem soap", "acne control", "antibacterial", "oily skin", "tea tree", "clarifying"],
+    tags: [
+      "neem oil soap",
+      "acne soap",
+      "herbal soap",
+      "natural antibacterial soap",
+      "African neem skincare",
+      "eco-friendly packaging",
+      "handmade soap",
+      "blemish treatment",
+      "sulfate free",
+      "plastic free",
+    ],
     variants: [
       { weight: "170g", price: 5000 },
       { weight: "40g", price: 1500 },
-      { weight: "3-pack", price: 13800 }
-    ],relatedCategories: ["Soaps", "Skincare"],
+      { weight: "Multi Pack (3pcs)", price: 13800 },
+    ],
+    relatedCategories: ["Soaps", "Skincare"],
   },
 
   // BALMS & OILS (4 products)
@@ -218,127 +297,178 @@ export const productsData = [
     slug: "raw-unrefined-shea-butter",
     name: "Raw Unrefined Shea Butter",
     category: "Balms & Oils",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Unrefined%20Shea-Butter-N7jiY8NLvk84TQYl2IbS5QXUK5O4b5.jpg",
-    tagline: "Pure | Nourishing | Multi-use | Natural Skincare",
-    description: "Pure, unrefined African shea butter that retains all its natural nutrients. Perfect for face, body, and hair care. This luxurious butter melts into your skin providing deep moisture and healing benefits. 100% natural, no additives or preservatives.",
-    howToUse: "Apply directly to damp skin for maximum absorption. Use on face, body, and hair. Great for massage and aromatherapy blending.",
+    image: "/images/unrefined-20shea-butter.jpg",
+    tagline: "Pure | Multi-Purpose | Moisturizing | Plastic-Free Packaging",
+    description:
+      "Our Raw Unrefined Shea Butter is 100% pure, ivory-colored, and packed with nourishing goodness. Soft to the touch and quick to melt into skin and hair, it delivers deep hydration and natural protection for all skin types. Ideal for DIY lovers, this butter is incredibly versatile — use it as a body balm, hair mask, baby lotion, lip salve, and more.",
+    howToUse:
+      "Apply to damp skin after bathing or showering. Use as a bath oil, massage oil, or daily body moisturizer. Add to your scalp or hair for shine and nourishment.",
     ingredients: "100% Pure Unrefined Shea Butter",
     benefits: [
-      "Deep moisturization and nourishment",
-      "Rich in vitamins A, E, and F",
-      "Powerful healing properties for scars",
-      "Reduces appearance of stretch marks",
-      "Anti-inflammatory and soothing",
-      "Maintains skin's natural pH balance"
+      "Deeply moisturizes skin, hair, lips, and cuticles",
+      "Supports skin healing and soothes irritation",
+      "Perfect for DIY skincare and haircare blends",
+      "Rich in vitamins A, E & essential fatty acids",
+      "Safe for sensitive skin, babies, and all skin types",
     ],
     specialFeatures: [
-      "100% Pure, unrefined and unscented",
-      "No additives, preservatives or chemicals",
-      "Cold-pressed from African shea nuts",
-      "Raw and natural with authentic color",
-      "Multi-purpose for face, body and hair"
+      "100% Raw, pure & unrefined",
+      "Preservative-free & fragrance-free",
+      "Packaged in an eco-friendly refill pouch",
+      "Handmade by women",
+      "Ethically and sustainably sourced in Africa",
+      "Soft, smooth, and truly natural",
     ],
-    tags: ["shea butter", "moisturizing", "multi-use", "natural", "unrefined", "healing"],
+    tags: [
+      "raw shea butter",
+      "unrefined shea",
+      "organic body butter",
+      "African shea butter",
+      "DIY skincare",
+      "natural moisturizer",
+      "fragrance free",
+      "eco refill",
+      "plastic free packaging",
+      "handmade in Africa",
+    ],
     variants: [
       { weight: "1kg", price: 10000 },
       { weight: "250g", price: 3500 },
-      { weight: "100g", price: 1500 }
-    ],relatedCategories: ["Soaps", "Skincare"],
+      { weight: "100g", price: 1500 },
+    ],
+    relatedCategories: ["Soaps", "Skincare"],
   },
   {
     id: 8,
     slug: "shea-cocoa-balm",
     name: "Shea Cocoa Balm",
     category: "Balms & Oils",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/SHEA%20COCOA%20BALM-NPPV5p0XqOXJD9p1hTjfig3WfHQVR3.jpg",
-    tagline: "Luxurious | Nourishing | Fragrant | Natural Skincare",
-    description: "Luxurious blend of shea butter and cocoa for ultimate skin nourishment. Rich, creamy balm perfect for face, body, and lip care. This premium combination delivers intense hydration with the delightful aroma of natural cocoa. Ideal for all skin types.",
-    howToUse: "Apply directly to clean skin. Use a spatula or clean fingers. Can be used on face, body, lips, and hair. Use as needed.",
-    ingredients: "Shea butter, cocoa butter, coconut oil, vitamin E, natural fragrance",
+    image: "/images/shea-20cocoa-20balm.jpg",
+    tagline: "Lightweight | Non-Greasy | Multipurpose | Glow Enhancing",
+    description:
+      "Wrap your skin in nature's softest touch with our Shea Body Oil, a luxuriously light yet deeply hydrating blend made from pure shea oil and botanical extracts. It's designed to moisturize, nourish, and restore your skin's natural glow — without feeling heavy or greasy. Perfect for dry, dull, or uneven skin, this oil absorbs quickly, leaving you soft, silky, and radiant all day.",
+    howToUse:
+      "Apply to damp skin after bathing or showering. Use as a bath oil, massage oil, or daily body moisturizer. Add to your scalp or hair for shine and nourishment.",
+    ingredients: "Shea butter, shea oil, coconut oil, vitamin E, natural botanical extracts",
     benefits: [
-      "Deep moisturization with luxurious feel",
-      "Rich cocoa aroma for sensory delight",
-      "Creamy texture absorbs beautifully",
-      "Multi-purpose balm for whole body",
-      "Nourishes and softens skin intensely",
-      "Maintains skin elasticity and glow"
+      "Lightweight and fast-absorbing",
+      "Locks in moisture and softens dry skin",
+      "Helps improve skin tone and elasticity",
+      "Natural glow enhancer for all skin types",
+      "Can be used on hair, scalp, and nails too!",
     ],
     specialFeatures: [
-      "Combination of shea and cocoa butters",
-      "Premium luxurious texture",
-      "Natural cocoa fragrance",
-      "Multi-purpose for face, body, lips",
-      "Handmade in small batches"
+      "Made with pure shea oil from Africa",
+      "100% preservative-free, fragrance-free & synthetic-free",
+      "Packaged in a refillable, Eco-friendly bottle",
+      "Handmade by women",
+      "Ethically and sustainable sourced ingredients",
+      "Suitable for children, sensitive skin, and all skin tones",
     ],
-    tags: ["shea cocoa balm", "moisturizing", "luxury", "multi-purpose", "fragrant"],
+    tags: [
+      "shea body oil",
+      "natural body oil",
+      "African shea oil",
+      "glowing skin",
+      "dry skin remedy",
+      "organic moisturizer",
+      "handmade skincare",
+      "sustainable beauty",
+      "women-made products",
+      "plastic-free skincare",
+    ],
     variants: [
-      { weight: "99g", price: 7000 },
-      { weight: "50g", price: 3500 },
-      { weight: "3-pack", price: 18000 }
-    ],relatedCategories: ["Soaps", "Skincare"],
+      { weight: "100ml", price: 6500 },
+      { weight: "Multi Pack (3pcs)", price: 18000 },
+    ],
+    relatedCategories: ["Soaps", "Skincare"],
   },
   {
     id: 9,
     slug: "neem-balm",
     name: "Neem Balm",
     category: "Balms & Oils",
-    image: "/images/carrot-soap-natural.jpg",
-    tagline: "Therapeutic | Antibacterial | Healing | Natural Skincare",
-    description: "Concentrated neem balm with potent antibacterial and antifungal properties. Ideal for targeted skin treatment and healing. This powerful therapeutic balm addresses specific skin concerns with ancient neem wisdom.",
-    howToUse: "Apply directly to affected areas. Massage gently for absorption. Use 2-3 times daily as needed.",
+    image: "/images/neembalm.jpg",
+    tagline: "Soothing | Healing | Purifying | Natural Skincare",
+    description:
+      "Our Neem Balm is a rich, concentrated healing salve crafted to soothe irritation, calm inflammation, and support clearer, healthier-looking skin. Infused with potent neem oil and nourishing plant butters, this gentle balm melts effortlessly into the skin, delivering long-lasting moisture and relief. Perfect for dry patches, blemish-prone areas, rashes, insect bites, and sensitive skin that needs extra care. Ideal for face and body — and safe for daily use.",
+    howToUse: "Apply to clean, dry skin. Massage gently for absorption. Use 2-3 times daily as needed.",
     ingredients: "Neem oil, shea butter, coconut oil, tea tree oil, vitamin E",
     benefits: [
-      "Potent antibacterial action",
-      "Strong antifungal properties",
-      "Targeted healing treatment",
-      "Long-lasting protective layer",
-      "Soothing and calming effects",
-      "Supports skin recovery"
+      "Helps soothe irritated or inflamed skin",
+      "Naturally targets acne, spots, and troubled areas",
+      "Deeply moisturizes dry, rough, or flaky skin",
+      "Supports skin repair and barrier protection",
+      "Gentle, multipurpose, and suitable for all skin types",
     ],
     specialFeatures: [
-      "Concentrated neem oil formula",
-      "Therapeutic grade quality",
-      "Enhanced with tea tree oil",
-      "Targeted problem-area treatment",
-      "Fast-absorbing balm"
+      "100% natural & preservative-free",
+      "Free from steroids, parabens & synthetic fragrances",
+      "Packaged in recyclable, eco-friendly jars",
+      "Handmade in small batches",
+      "Powered by African botanicals and traditional herbal care",
     ],
-    tags: ["neem balm", "therapeutic", "antibacterial", "antifungal", "healing"],
+    tags: [
+      "neem balm",
+      "healing balm",
+      "skin repair balm",
+      "natural skincare",
+      "anti-acne balm",
+      "soothing salve",
+      "African skincare",
+      "eco-friendly beauty",
+      "multipurpose balm",
+      "moisturizing balm",
+    ],
     variants: [
       { weight: "100g", price: 6500 },
       { weight: "50g", price: 3500 },
-      { weight: "3-pack", price: 18000 }
-    ],relatedCategories: ["Soaps", "Skincare"],
+      { weight: "Multi Pack (3pcs)", price: 18000 },
+    ],
+    relatedCategories: ["Soaps", "Skincare"],
   },
   {
     id: 10,
     slug: "neem-body-oil",
     name: "Neem Body Oil",
     category: "Balms & Oils",
-    image: "/images/shea-butter-product-package.jpg",
-    tagline: "Therapeutic | Nourishing | Healing | Natural Skincare",
-    description: "Therapeutic neem body oil with antibacterial and antifungal properties. Great for skin health and wellness. Lightweight yet deeply nourishing oil that absorbs quickly and provides long-lasting benefits.",
+    image: "/images/neemoil.jpg",
+    tagline: "Purifying | Repairing | Balancing | Natural Skincare",
+    description:
+      "Our Neem Body Oil is a lightweight, fast-absorbing blend formulated to calm, purify, and deeply nourish the skin. Powered by the soothing plant extracts of Neem, this body oil helps reduce irritation, balance problem-prone skin, and support a healthy, even-toned glow. Perfect for daily moisturizing, it sinks in effortlessly — leaving skin soft, hydrated, and refreshed without heaviness or residue. Ideal for all skin types, especially sensitive, acne-prone, uneven, or easily irritated skin.",
     howToUse: "Apply to damp skin after bathing. Massage gently until absorbed. Use daily or as needed.",
     ingredients: "Neem oil, coconut oil, tea tree oil, vitamin E",
     benefits: [
-      "Antibacterial protection",
-      "Antifungal action",
-      "Healing and therapeutic",
-      "Skin nourishing and soft",
-      "Therapeutic benefits",
-      "Quick absorption"
+      "Helps soothe and calm inflamed or irritated skin",
+      "Balances acne-prone and oily areas on the body",
+      "Nourishes, softens, and hydrates without clogging pores",
+      "Supports clearer, healthier-looking skin",
+      "Lightweight, gentle, and perfect for everyday use",
     ],
     specialFeatures: [
-      "Pure neem and coconut oils",
-      "Therapeutic grade formula",
-      "Lightweight body oil",
-      "Fast absorbing texture",
-      "Multi-beneficial"
+      "100% natural, cold-pressed plant oils",
+      "Free from preservatives, parabens & mineral oils",
+      "Packaged in recyclable, eco-friendly materials",
+      "Handmade in small batches",
+      "Ethically sourced African botanicals with powerful skin benefits",
     ],
-    tags: ["neem oil", "body oil", "therapeutic", "antibacterial", "nourishing"],
+    tags: [
+      "neem oil",
+      "body oil",
+      "anti-acne body oil",
+      "natural skincare",
+      "soothing oil",
+      "organic body oil",
+      "African skincare",
+      "eco-friendly beauty",
+      "lightweight moisturizer",
+      "blemish control",
+    ],
     variants: [
       { weight: "100ml", price: 6500 },
-      { weight: "3-pack", price: 18000 }
-    ],relatedCategories: ["Soaps", "Skincare"],
+      { weight: "Multi Pack (3pcs)", price: 18000 },
+    ],
+    relatedCategories: ["Soaps", "Skincare"],
   },
 
   // WELLNESS (1 product)
@@ -347,28 +477,41 @@ export const productsData = [
     slug: "hot-body-balm",
     name: "Hot Body Balm",
     category: "Wellness",
-    image: "/images/shea-cocoa-balm-jar-organic-skincare.jpg",
-    tagline: "Warming | Soothing | Relief | Wellness",
-    description: "Warming body balm with heat-generating properties. Perfect for muscle relief and warming therapy. This therapeutic balm provides comfort and relaxation for tired muscles.",
-    howToUse: "Apply to clean, dry skin. Massage gently for deep penetration. Use as needed for muscle relief.",
-    ingredients: "Shea butter, coconut oil, warming oils, natural fragrance",
+    image: "/images/hot-body-balm-warming-therapy.jpg",
+    tagline: "Warming | Soothing | Plant-Based Relief",
+    description:
+      "Give your body the comfort it craves with our Hot Body Balm — a warming, herbal-infused balm crafted to ease tension, soothe sore muscles, and boost circulation naturally. Infused with ginger, cayenne, menthol, and African healing oils, this balm delivers a gentle heat that penetrates deep into tired muscles and stiff joints. Whether you're managing stress, post-workout soreness, or everyday aches, this balm offers comforting relief — without synthetic ingredients or harsh chemicals.",
+    howToUse:
+      "Rub a small amount onto affected areas (back, neck, knees, joints, abdomen). Use for massages or before bed for deep relaxation. Avoid broken skin or face; wash hands after use.",
+    ingredients: "Ginger extract, cayenne, menthol, shea butter, African healing oils",
     benefits: [
-      "Warming sensation",
-      "Muscle relief",
-      "Deep penetration",
-      "Soothing comfort",
-      "Long-lasting effect"
+      "Helps relieve body aches, tension & stiffness",
+      "Stimulates circulation & warms cold limbs",
+      "Great for menstrual cramps and back pain",
+      "Fast-absorbing & non-greasy",
+      "Perfect for massages and daily use",
     ],
     specialFeatures: [
-      "Heat-generating formula",
-      "Muscle relief balm",
-      "Comforting warmth",
-      "Long-lasting effects",
-      "Professional grade"
+      "Infused with warming botanicals like ginger & cayenne",
+      "100% natural, fragrance-free & preservative-free",
+      "Packaged in a plastic-free, eco-conscious container",
+      "Handmade by women",
+      "Ethically sourced African ingredients",
+      "Inspired by traditional African remedies",
     ],
-    tags: ["hot balm", "muscle relief", "warming", "wellness", "therapeutic"],
-    variants: [
-      { weight: "99g", price: 7000 }
-    ],relatedCategories: ["Soaps", "Skincare"],
-  }
+    tags: [
+      "warming balm",
+      "hot body balm",
+      "natural pain relief",
+      "herbal balm for aches",
+      "menstrual cramp relief",
+      "ginger balm",
+      "African body care",
+      "handmade wellness",
+      "eco-friendly balm",
+      "women-made skincare",
+    ],
+    variants: [{ weight: "99g", price: 7000 }],
+    relatedCategories: ["Soaps", "Skincare"],
+  },
 ]

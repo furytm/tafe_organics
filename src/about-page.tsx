@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import TeamMembers from "@/src/components/team-members"
 
 export default function AboutPageContent() {
   const [expandedValue, setExpandedValue] = useState<string | null>("love")
@@ -43,12 +44,12 @@ export default function AboutPageContent() {
     <main>
       {/* Hero Section */}
       <div
-        className="relative w-full h-96 flex items-center justify-center bg-cover bg-center"
+        className="relative w-full h-96 flex items-center justify-center bg-cover bg-center animate-fadeIn"
         style={{
           backgroundImage: "url('/images/abouthero.jpeg')",
         }}
       >
-        <div className="relative z-10 text-center">
+        <div className="relative z-10 text-center animate-slideDown">
           <h1 className="text-5xl md:text-6xl playfairbold font-bold text-white">About Us</h1>
         </div>
       </div>
@@ -66,19 +67,19 @@ export default function AboutPageContent() {
           <div className="space-y-6 text-gray-700 leading-relaxed">
             {[
               {
-                para: "Tafe Organics was established by a mom in her desperation to help her son's skin better. With a love for enterprise, Ifeoluwa Folawiyo helped enhanced the beauty of her university friends with makeup for birthdays and special events. She made friends with cosmetics store owners and recommended skincare products for her friends which she sold for a small token.",
+                para: "Tafe Organics was born from a deeply personal journey — one that began not in a boardroom or a laboratory, but in the heart of a mother’s everyday struggles with her child’s extra sensitive skin, due to allergies, For years, I watched my son — and often others — battle with skin challenges such as dry skin, eczema and dermatitis that seemed to strip away comfort and confidence. We tried everything we could find on store shelves, yet so many of those products were filled with harsh chemicals, disconnected from our environment, and indifferent to the unique beauty of African skin. I knew there had to be a better way — one that worked, honored both our bodies and our heritage.",
                 delay: "100ms",
               },
               {
-                para: "Fast forward 3 years after college, she came across a newspaper advert in 2011, on training about how to make soaps and lotions. Her interest in cosmetics motivated her to attend the training. Though she never got the time to practice what she learnt because she had a full time job. Four years later, she had a son who suddenly developed skin allergies making his skin often dry itchy and scaly leading to bouts of sleepless nights.",
+                para: "That’s when I began exploring the ancient secrets of African botanicals — the same ingredients our grandmothers trusted for healing, a glowing skin, and nourishment. I was captivated by the power of Shea, Palm, Baobab, Neem and African black soap — simple, potent gifts from our soil that have stood the test of time. I realized these weren’t just ingredients; they were a connection to our roots, our culture, and the natural wisdom that has always been part of who we are.Tafe Organics was created to reclaim that wisdom and share it with the world.",
                 delay: "200ms",
               },
               {
-                para: "After countless visits to doctors and using different over the counter medications, she had little success with healing her son's skin. Ifeoluwa's mom, concerned about her grandson gifted her African black soap, Shea-butter and black palm kernel oil at Ekiti state, Nigeria. Her son's skin greatly improved and she remembered she could make more with these gifts as raw materials for making other skincare products.",
+                para: "It is more than a skincare brand — it’s a celebration of Africa’s rich botanical heritage and a bridge between tradition and modern science. Every formula we create is designed with care: clean, gentle, and effective, especially for sensitive skin. But more than that, each product carries a piece of our story — a reminder that beauty is not something we chase; it’s something we nurture.Today, Tafe Organics stands as a love letter to our roots and a promise to our future — to offer skincare that heals, nourishes, and empowers, while honoring the land and legacy that inspire us.",
                 delay: "300ms",
               },
               {
-                para: "On this journey, she realized that there are many people like her son, both young and old who have sensitive and allergy prone skin and that she could help them find a solution while making a business out of it.",
+                para: "This is why Tafe Organics exists as a family-centric brand : to help you and your loved ones glow naturally, beautifully, and unapologetically — just as nature intended.",
                 delay: "400ms",
               },
               {
@@ -102,87 +103,7 @@ export default function AboutPageContent() {
       </section>
 
       {/* Team Members */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-16 animate-slideUp">
-            <h2 className="text-5xl font-bold text-center playfairbold text-[#6BBE49] mb-4">Meet Our Team</h2>
-            <div className="h-1 w-24 bg-[#6BBE49] mx-auto rounded-full"></div>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Lead Member */}
-            <div
-              className="group text-center animate-scaleIn"
-              style={{
-                animation: "scaleIn 0.6s ease-out forwards",
-              }}
-            >
-              <div className="relative overflow-hidden rounded-xl mb-6 shadow-lg transform transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105">
-                <img
-                  src="/images/main-20staff-20image.jpg"
-                  alt="Ifeoluwa Folawiyo"
-                  className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                  <div className="text-white">
-                    <p className="text-sm opacity-90">Managing Director</p>
-                  </div>
-                </div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 playfairbold">Ifeoluwa Folawiyo</h3>
-              <p className="text-[#6BBE49] font-semibold mt-2">Founder & Managing Director</p>
-              <p className="text-gray-600 text-sm mt-2">
-                Passionate about creating natural, eco-conscious skincare solutions
-              </p>
-            </div>
-
-            {/* Team Members */}
-            <div
-              className="group text-center animate-scaleIn"
-              style={{
-                animation: "scaleIn 0.6s ease-out 100ms forwards",
-                opacity: 0,
-              }}
-            >
-              <div className="relative overflow-hidden rounded-xl mb-6 shadow-lg transform transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105">
-                <img
-                  src="/images/2nd-20staff-20image.jpg"
-                  alt="Team Member"
-                  className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 playfairbold">Our Team</h3>
-              <p className="text-[#6BBE49] font-semibold mt-2">Dedicated Professionals</p>
-              <p className="text-gray-600 text-sm mt-2">
-                Committed to excellence in product quality and customer service
-              </p>
-            </div>
-
-            <div
-              className="group text-center animate-scaleIn"
-              style={{
-                animation: "scaleIn 0.6s ease-out 200ms forwards",
-                opacity: 0,
-              }}
-            >
-              <div className="relative overflow-hidden rounded-xl mb-6 shadow-lg transform transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105">
-                <img
-                  src="/images/3rd-20staff-20image.jpg"
-                  alt="Team Member"
-                  className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 playfairbold">Growing Together</h3>
-              <p className="text-[#6BBE49] font-semibold mt-2">Team Collaboration</p>
-              <p className="text-gray-600 text-sm mt-2">
-                Building a community dedicated to organic beauty and wellness
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <TeamMembers />
 
       {/* Our Values */}
       <section className="py-16 px-4 bg-gray-50">
@@ -276,47 +197,7 @@ export default function AboutPageContent() {
         </div>
       </section>
 
-      {/* MAP SECTION */}
-      <section className="py-20 bg-secondary">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-serif text-4xl font-bold text-primary mb-12 text-center animate-fade-in-up playfairbold">
-            Find Us
-          </h2>
-
-          <div className="bg-background rounded-lg overflow-hidden shadow-lg animate-scale-in">
-            {/* Google Map */}
-            <div className="w-full h-[300px]">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.356500024856!2d3.2869646735048237!3d6.602543222242809!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b90508df8195b%3A0xedd4d8a831e92efc!2s2%20C%20%26%20I%20Cl%2C%20Idimu%2C%20Lagos%20102213%2C%20Lagos!5e0!3m2!1sen!2sng!4v1764437313918!5m2!1sen!2sng"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
-
-            {/* Map Info Section */}
-            <div className="p-6 text-center">
-              <h3 className="text-xl  playfairreg font-semibold mb-2">Our Location</h3>
-
-              <p className="mb-4 playfairreg ">House 2, C Close, Gowon Estate, Ipaja, Lagos.</p>
-
-              <a
-                href="https://maps.google.com/?q=House 2, C Close, Gowon Estate, Ipaja, Lagos"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block  bg-[#6BBE49] text-secondary hover:bg-primary/90 
-                     font-medium px-6 py-2 rounded-full transition-all duration-300 
-                     hover:scale-105"
-              >
-                Get Directions
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+     
     </main>
   )
 }

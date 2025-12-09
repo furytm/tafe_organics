@@ -60,8 +60,8 @@ export default function Header() {
             {/* Contact Button */}
             <Link
               href="/contact"
-              className="inline-block bg-[#6BBE49] text-white px-5 py-3 md:px-8 md:py-4 
-                         text-sm md:text-lg playfairbold font-semibold rounded-full 
+              className="inline-block bg-[#6BBE49] text-white px-3 py-2 md:px-8 md:py-4 
+                         text-xs md:text-lg playfairbold font-semibold rounded-full 
                          hover:bg-[#5aaa3f] transition-all duration-300 hover:translate-y-[-2px]"
             >
               Contact Táfe

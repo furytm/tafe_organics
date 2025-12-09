@@ -2,12 +2,16 @@
 
 import { Instagram, Mail } from "lucide-react"
 import Image from "next/image"
+import MapSection from "@/components/MapSection" 
 import Link from "next/link"
 
 export default function Footer() {
-  return (
-    <footer className="bg-black text-white py-20 px-6 mt-20">
+  return (<> {/* MAP ABOVE FOOTER */}
+      <MapSection />
+    <footer className="bg-black text-white py-20 px-6 ">
+      
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-16">
+        
         {/* LEFT — Brand & Social */}
         <div className="text-center lg:text-left">
           {/* Replace Text With Logo Image */}
@@ -93,16 +97,14 @@ export default function Footer() {
           <Link href="/terms-and-conditions" className="hover:text-[#6BBE49] transition">
             Terms & Conditions
           </Link>
-          <span>•</span>
-          <a href="mailto:support@tafeorganics.com" className="hover:text-[#6BBE49] transition">
-            Privacy Policy
-          </a>
+      
         </div>
         © 2025 Táfe Organics. Developed and Designed by{" "}
         <span className="inline-flex items-center justify-center mx-1">
           <Image src="/images/suwebatu.png" alt="Suwebatu" width={90} height={40} className="object-contain" />
         </span>
       </div>
-    </footer>
+    </footer></>
+     
   )
 }

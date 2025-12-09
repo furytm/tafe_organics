@@ -56,7 +56,9 @@ export default function ProductCard({ product, showVariantSelector = true }: Pro
       </Link>
 
       <div className="px-1">
-        <h3 className="text-sm font-bold playfairreg text-gray-900 uppercase mb-2 line-clamp-2">{product.name}</h3>
+        <h3 className="text-sm font-bold playfairreg text-gray-900 uppercase mb-2 h-10 line-clamp-2 overflow-hidden">
+          {product.name}
+        </h3>
 
         {showVariantSelector && product.variants && product.variants.length > 1 && (
           <div className="mb-2 flex flex-wrap gap-1">
@@ -79,14 +81,16 @@ export default function ProductCard({ product, showVariantSelector = true }: Pro
           </div>
         )}
 
-        {currentPrice > 0 ? (
-          <>
-            <p className="text-[#E89B3C] font-bold text-sm">₦{currentPrice.toLocaleString()}.00</p>
-            <p className="text-xs text-gray-600 mb-3">{currentVariant?.weight}</p>
-          </>
-        ) : (
-          <p className="text-[#E89B3C] font-bold text-sm mb-3">Price on request</p>
-        )}
+        <div className="h-12 mb-3">
+          {currentPrice > 0 ? (
+            <>
+              <p className="text-[#E89B3C] font-bold text-sm">₦{currentPrice.toLocaleString()}.00</p>
+              <p className="text-xs text-gray-600">{currentVariant?.weight}</p>
+            </>
+          ) : (
+            <p className="text-[#E89B3C] font-bold text-sm">Price on request</p>
+          )}
+        </div>
 
         <button
           onClick={handleAddToCart}
