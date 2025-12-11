@@ -21,7 +21,7 @@ export default function ShopPageContent() {
             <h1 className="text-4xl  playfairbold text-gray-900 mb-2"> Tafe Shop</h1>
             <p className="text-gray-600">Showing all {productsData.length} results</p>
           </div>
-          <select
+          {/* <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
             className="px-4 py-2 border border-gray-300 rounded bg-white text-gray-900 font-medium hover:border-gray-400 transition cursor-pointer"
@@ -30,7 +30,7 @@ export default function ShopPageContent() {
             <option value="price-low">Sort by price: Low to High</option>
             <option value="price-high">Sort by price: High to Low</option>
             <option value="newest">Sort by newest</option>
-          </select>
+          </select> */}
         </div>
       </div>
 

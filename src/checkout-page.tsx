@@ -70,7 +70,7 @@ const DELIVERY_REGIONS: DeliveryRegion[] = [
 ]
 
 export default function CheckoutPage() {
-  const { items, getTotalPrice, closeCart } = useCart()
+  const { items, getTotalPrice, clearCart } = useCart()
   const [selectedRegion, setSelectedRegion] = useState<DeliveryRegion | null>(null)
   const [customerInfo, setCustomerInfo] = useState({
     name: "",
@@ -82,24 +82,24 @@ export default function CheckoutPage() {
   const shippingCost = selectedRegion?.cost || 0
   const total = subtotal + shippingCost
 
-  const generateInvoice = () => {
-    if (!selectedRegion || !customerInfo.name || !customerInfo.phone) {
-      alert("Please fill in all required fields and select a delivery region")
-      return
-    }
+ const generateInvoice = () => {
+  if (!selectedRegion) {
+    alert("Please select a delivery region")
+    return
+  }
 
-    const itemsList = items
-      .map(
-        (item) =>
-          `${item.name} (${item.weight}) x${item.quantity}: ₦${(item.price * item.quantity).toLocaleString()}.00`,
-      )
-      .join("\n")
+  const itemsList = items
+    .map(
+      (item) =>
+        `${item.name} (${item.weight}) x${item.quantity}: ₦${(item.price * item.quantity).toLocaleString()}.00`
+    )
+    .join("\n")
 
-    const message = `*TAFE ORGANICS ORDER INVOICE*
+  const message = `*TAFE ORGANICS ORDER INVOICE*
 
 *Customer Details:*
-Name: ${customerInfo.name}
-Phone: ${customerInfo.phone}
+Name: ${customerInfo.name || "Not provided"}
+Phone: ${customerInfo.phone || "Not provided"}
 
 *Order Items:*
 ${itemsList}
@@ -113,7 +113,10 @@ Shipping Cost: ₦${shippingCost.toLocaleString()}.00
 Thank you for your order!`
 
     const encodedMessage = encodeURIComponent(message)
-    const whatsappURL = `https://wa.me/+234${customerInfo.phone.replace(/\D/g, "").slice(-10)}?text=${encodedMessage}`
+  const whatsappURL = `https://wa.me/2348108400962?text=${encodedMessage}`
+
+
+    clearCart()
     window.open(whatsappURL, "_blank")
   }
 
@@ -174,14 +177,14 @@ Thank you for your order!`
               <div className="space-y-4">
                 <input
                   type="text"
-                  placeholder="Full Name *"
+                  placeholder="Full Name (optional) *"
                   value={customerInfo.name}
                   onChange={(e) => setCustomerInfo({ ...customerInfo, name: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#6BBE49]"
                 />
                 <input
                   type="tel"
-                  placeholder="Phone Number (e.g., 08108400962) *"
+                  placeholder="Phone Number (optional) *"
                   value={customerInfo.phone}
                   onChange={(e) => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#6BBE49]"

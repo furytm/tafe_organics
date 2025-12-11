@@ -1,6 +1,6 @@
 "use client"
 
-import React, { createContext, useState, useCallback } from "react"
+import React, { createContext, useState, useCallback, useEffect } from "react"
 import type { Product } from "@/lib/products-data"
 
 export interface CartItem {
@@ -23,6 +23,7 @@ interface CartContextType {
   updateQuantity: (id: string, quantity: number) => void
   getTotalItems: () => number
   getTotalPrice: () => number
+  clearCart: () => void
 }
 
 export const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -30,6 +31,25 @@ export const CartContext = createContext<CartContextType | undefined>(undefined)
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
   const [isOpen, setIsOpen] = useState(false)
+  const [isHydrated, setIsHydrated] = useState(false)
+
+  useEffect(() => {
+    const savedCart = localStorage.getItem("tafe-cart")
+    if (savedCart) {
+      try {
+        setItems(JSON.parse(savedCart))
+      } catch (error) {
+        console.error("Failed to load cart from localStorage:", error)
+      }
+    }
+    setIsHydrated(true)
+  }, [])
+
+  useEffect(() => {
+    if (isHydrated) {
+      localStorage.setItem("tafe-cart", JSON.stringify(items))
+    }
+  }, [items, isHydrated])
 
   const openCart = useCallback(() => setIsOpen(true), [])
   const closeCart = useCallback(() => setIsOpen(false), [])
@@ -79,6 +99,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     [removeFromCart],
   )
 
+  const clearCart = useCallback(() => {
+    setItems([])
+    localStorage.removeItem("tafe-cart")
+  }, [])
+
   const getTotalItems = useCallback(() => {
     return items.reduce((total, item) => total + item.quantity, 0)
   }, [items])
@@ -99,6 +124,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         updateQuantity,
         getTotalItems,
         getTotalPrice,
+        clearCart,
       }}
     >
       {children}

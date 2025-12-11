@@ -21,12 +21,12 @@ export default function BarSoapPageContent() {
             </div>
 
             {/* Sort Dropdown */}
-            <select className="border border-gray-300 px-4 py-2 rounded bg-white text-gray-900 font-medium animate-slideUp">
+            {/* <select className="border border-gray-300 px-4 py-2 rounded bg-white text-gray-900 font-medium animate-slideUp">
               <option>Sort by popularity</option>
               <option>Sort by price: low to high</option>
               <option>Sort by price: high to low</option>
               <option>Sort by newest</option>
-            </select>
+            </select> */}
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">

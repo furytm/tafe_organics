@@ -2,12 +2,10 @@
 
 import { Instagram, Mail } from "lucide-react"
 import Image from "next/image"
-import MapSection from "@/components/MapSection" 
 import Link from "next/link"
 
 export default function Footer() {
-  return (<> {/* MAP ABOVE FOOTER */}
-      <MapSection />
+  return (
     <footer className="bg-black text-white py-20 px-6 ">
       
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-16">
@@ -104,7 +102,6 @@ export default function Footer() {
           <Image src="/images/suwebatu.png" alt="Suwebatu" width={90} height={40} className="object-contain" />
         </span>
       </div>
-    </footer></>
-     
+    </footer>
   )
 }

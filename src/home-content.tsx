@@ -57,7 +57,7 @@ export default function HomeContent() {
       </div>
 
       {/* HERO SECTION */}
-      <section className="relative w-full h-[40vh] md:h-[75vh] lg:h-screen overflow-hidden flex items-center">
+      <section className="relative w-full h-[45vh] md:h-[75vh] lg:h-screen overflow-hidden flex items-center">
         {/* Background Crossfade */}
         {slides.map((slide, index) => (
           <motion.div
@@ -143,16 +143,7 @@ export default function HomeContent() {
         </div>
       </section>
 
-     
-
-      {/* BRAND INTRO */}
-      <section className="py-20 md:py-24 px-4 text-center bg-white">
-        <p className="text-2xl md:text-3xl font-serif text-gray-800 max-w-4xl mx-auto leading-relaxed">
-          <span className="bg-[#752E2E] playfairreg text-white px-3 py-1 inline-block mr-2">"Táfe</span>
-          Organics was established by a mom in her desperation to help her son's skin get better."
-        </p>
-      </section>
-
+    
       {/* SHOP BY CATEGORY */}
       <section className="py-20 px-4 bg-white -mt-8 md:-mt-16 relative z-10">
         <div className="max-w-7xl mx-auto">

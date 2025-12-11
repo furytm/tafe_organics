@@ -9,7 +9,7 @@ export default function SheaButterPageContent() {
     <main>
       {/* PROMO BANNER */}
       <div className=" bg-[#6BBE49] text-center py-3 text-sm playfairreg font-semibold text-gray-800">
-        ★ ★ ★ ★ ★ Free Standard Shipping on Orders Over ₦100k.
+        ★ ★ ★ ★ ★ Free Standard Shipping on Orders Over ₦100k Locally.
       </div>
       <div className="py-12 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
@@ -18,14 +18,14 @@ export default function SheaButterPageContent() {
               <h1 className="text-4xl md:text-5xl  playfairbold font-bold mb-2 animate-slideDown">Balms & Oils</h1>
               <p className="text-gray-600 animate-slideUp">Showing all {balmsAndOils.length} results</p>
             </div>
-
-            {/* Sort Dropdown */}
+{/* 
+            Sort Dropdown
             <select className="border border-gray-300 px-4 py-2 rounded bg-white text-gray-900 font-medium animate-slideUp">
               <option>Sort by popularity</option>
               <option>Sort by price: low to high</option>
               <option>Sort by price: high to low</option>
               <option>Sort by newest</option>
-            </select>
+            </select> */}
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
