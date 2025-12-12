@@ -1,6 +1,6 @@
 "use client"
 
-import { Instagram, Mail } from "lucide-react"
+import { Instagram, Mail,Send  } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import Swal from "sweetalert2"
@@ -12,6 +12,8 @@ export default function Footer() {
     email: "",
     message: "",
   })
+  const [loading, setLoading] = useState(false);
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -20,8 +22,12 @@ export default function Footer() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-  
+  setLoading(true);
+
+
+
     const data = new FormData()
+    
     data.append("access_key", "8052b73a-6693-49a5-983d-d2ecffc16fee")
     data.append("from_name", "Tafe Organics Website")
     data.append("subject", "New Footer Contact Form Message")
@@ -70,6 +76,7 @@ export default function Footer() {
         timer: 2500,
       })
     }
+    setLoading(false);
   }
 
   return (
@@ -146,12 +153,22 @@ export default function Footer() {
               className="w-full bg-white/10 border border-white/20 rounded-lg py-3 px-4 text-white placeholder-gray-300 focus:outline-none focus:border-[#6BBE49]"
             ></textarea>
 
-            <button
-              type="submit"
-              className="w-full bg-[#6BBE49] hover:bg-[#5aaa3f] transition py-3 rounded-lg font-semibold"
-            >
-              Send Message
-            </button>
+           <button
+      type="submit"
+      disabled={loading}
+      className={`w-full bg-[#6BBE49] text-white font-semibold py-3 rounded-lg transition-all duration-300 
+        ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-[#5aaa3f]"}
+      `}
+    >
+      {loading ? (
+        "Sending..."
+      ) : (
+        <span className="flex items-center justify-center gap-2">
+          <Send size={20} />
+          Send Message
+        </span>
+      )}
+    </button>
           </form>
         </div>
 

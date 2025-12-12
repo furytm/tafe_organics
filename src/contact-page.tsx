@@ -1,9 +1,8 @@
 "use client"
 
-import type React from "react"
 
 import { useState } from "react"
-import { Send, Mail, Phone, MapPin, CheckCircle } from "lucide-react"
+import { Send, Mail, Phone, MapPin } from "lucide-react"
 import Swal from "sweetalert2";
 
 
