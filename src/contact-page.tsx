@@ -4,33 +4,93 @@ import type React from "react"
 
 import { useState } from "react"
 import { Send, Mail, Phone, MapPin, CheckCircle } from "lucide-react"
+import Swal from "sweetalert2";
+
 
 export default function ContactPageContent() {
-  const [formData, setFormData] = useState({
+ 
+ const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     subject: "",
     message: "",
-  })
-  const [submitted, setSubmitted] = useState(false)
+  });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Here you would send the form data to your backend
-    console.log("Form submitted:", formData)
-    setSubmitted(true)
-    setTimeout(() => {
-      setFormData({ name: "", email: "", phone: "", subject: "", message: "" })
-      setSubmitted(false)
-    }, 3000)
-  }
+  const handleChange = (e: any) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    // Add Web3Forms access key
+    data.append("access_key", "8052b73a-6693-49a5-983d-d2ecffc16fee");
+      data.append("from_name", "Tafe Organics Website");
+  data.append("subject", "New Contactpage Form Message");
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: data,
+      });
+
+      const result = await res.json();
+
+      if (result.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Message sent!",
+          text: "We'll get back to you soon.",
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+        });
+
+        form.reset();
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Failed!",
+          text: "Please try again.",
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Network Error",
+        text: "Check your connection and try again.",
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+      });
+    }
+
+    setLoading(false);
+  };
   return (
     <main>
       {/* Hero Section with Image */}
@@ -83,91 +143,81 @@ export default function ContactPageContent() {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-3xl mx-auto">
-          <div className="mb-12 text-center">
-            <h2 className="text-4xl playfairbold font-bold mb-4">Send Us a Message</h2>
-            <p className="text-gray-600 text-lg">Got questions about our products? Let us know how we can help.</p>
+        <section className="py-16 px-4 bg-white">
+      <div className="max-w-3xl mx-auto">
+        <div className="mb-12 text-center">
+          <h2 className="text-4xl playfairbold font-bold mb-4">Send Us a Message</h2>
+          <p className="text-gray-600 text-lg">
+            Got questions about our products? Let us know how we can help.
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6 animate-fadeIn">
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <input
+              type="text"
+              name="name"
+              placeholder="Your Full Name *"
+              required
+              onChange={handleChange}
+              className="w-full bg-gray-50 border border-gray-300 rounded-lg py-3 px-4 text-gray-900"
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email *"
+              required
+              onChange={handleChange}
+              className="w-full bg-gray-50 border border-gray-300 rounded-lg py-3 px-4 text-gray-900"
+            />
           </div>
 
-          {submitted && (
-            <div className="mb-8 p-6 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3 animate-slideUp">
-              <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0" />
-              <div>
-                <h3 className="font-bold text-green-900">Message Sent!</h3>
-                <p className="text-green-700">Thank you for reaching out. We'll get back to you soon.</p>
-              </div>
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit} className="space-y-6 animate-fadeIn">
-            <div className="grid md:grid-cols-2 gap-6">
-              <input
-                type="text"
-                name="name"
-                placeholder="Your Full Name *"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="w-full bg-gray-50 border border-gray-300 rounded-lg py-3 px-4 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-[#6BBE49] focus:ring-2 focus:ring-[#6BBE49]/20 transition"
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email *"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="w-full bg-gray-50 border border-gray-300 rounded-lg py-3 px-4 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-[#6BBE49] focus:ring-2 focus:ring-[#6BBE49]/20 transition"
-              />
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Phone Number"
-                value={formData.phone}
-                onChange={handleChange}
-                className="w-full bg-gray-50 border border-gray-300 rounded-lg py-3 px-4 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-[#6BBE49] focus:ring-2 focus:ring-[#6BBE49]/20 transition"
-              />
-              <select
-                name="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                required
-                className="w-full bg-gray-50 border border-gray-300 rounded-lg py-3 px-4 text-gray-900 focus:outline-none focus:border-[#6BBE49] focus:ring-2 focus:ring-[#6BBE49]/20 transition"
-              >
-                <option value="">Select a Subject *</option>
-                <option value="product-inquiry">Product Inquiry</option>
-                <option value="bulk-order">Bulk Order</option>
-                <option value="wholesale">Wholesale</option>
-                <option value="partnership">Partnership</option>
-                <option value="feedback">Feedback</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-
-            <textarea
-              name="message"
-              placeholder="Your Message *"
-              value={formData.message}
+          <div className="grid md:grid-cols-2 gap-6">
+            <input
+              type="tel"
+              name="phone"
+              placeholder="Phone Number"
               onChange={handleChange}
-              required
-              rows={6}
-              className="w-full bg-gray-50 border border-gray-300 rounded-lg py-3 px-4 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-[#6BBE49] focus:ring-2 focus:ring-[#6BBE49]/20 transition resize-none"
-            ></textarea>
+              className="w-full bg-gray-50 border border-gray-300 rounded-lg py-3 px-4 text-gray-900"
+            />
 
-            <button
-              type="submit"
-              className="w-full bg-[#6BBE49] hover:bg-[#5aaa3f] text-white font-semibold py-4 rounded-lg transition-all duration-300 hover:translate-y-[-2px] flex items-center justify-center gap-2 active:translate-y-0"
+            <select
+              name="subject"
+              required
+              onChange={handleChange}
+              className="w-full bg-gray-50 border border-gray-300 rounded-lg py-3 px-4 text-gray-900"
             >
-              <Send size={20} />
-              Send Message
-            </button>
-          </form>
-        </div>
-      </section>
+              <option value="">Select a Subject *</option>
+              <option value="product-inquiry">Product Inquiry</option>
+              <option value="bulk-order">Bulk Order</option>
+              <option value="wholesale">Wholesale</option>
+              <option value="partnership">Partnership</option>
+              <option value="feedback">International orders</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <textarea
+            name="message"
+            required
+            rows={6}
+            placeholder="Your Message *"
+            onChange={handleChange}
+            className="w-full bg-gray-50 border border-gray-300 rounded-lg py-3 px-4 text-gray-900 resize-none"
+          ></textarea>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-[#6BBE49] hover:bg-[#5aaa3f] text-white font-semibold py-4 rounded-lg transition-all"
+          >
+            {loading ? "Sending..." : <span className="flex items-center justify-center gap-2"><Send size={20} /> Send Message</span>}
+          </button>
+        </form>
+      </div>
+    </section>
+
 
       {/* Map Section */}
       <section className="py-16 px-4 bg-gray-50">

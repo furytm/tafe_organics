@@ -3,8 +3,75 @@
 import { Instagram, Mail } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import Swal from "sweetalert2"
+import { useState } from "react"
 
 export default function Footer() {
+    const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+  
+    const data = new FormData()
+    data.append("access_key", "8052b73a-6693-49a5-983d-d2ecffc16fee")
+    data.append("from_name", "Tafe Organics Website")
+    data.append("subject", "New Footer Contact Form Message")
+
+    data.append("name", formData.name)
+    data.append("email", formData.email)
+    data.append("message", formData.message)
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: data,
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title: "Message sent successfully!",
+          showConfirmButton: false,
+          timer: 2500,
+        })
+
+        // Reset form
+        setFormData({ name: "", email: "", message: "" })
+      } else {
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "error",
+          title: "Something went wrong!",
+          showConfirmButton: false,
+          timer: 2500,
+        })
+      }
+    } catch (error) {
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Network error. Try again.",
+        showConfirmButton: false,
+        timer: 2500,
+      })
+    }
+  }
+
   return (
     <footer className="bg-black text-white py-20 px-6 ">
       
@@ -46,22 +113,36 @@ export default function Footer() {
         </div>
 
         {/* MIDDLE — Contact Form */}
-        <div>
+          <div>
           <h3 className="text-2xl font-semibold mb-6 text-center lg:text-left">Send Us a Message</h3>
-          <form className="space-y-4">
+
+          <form onSubmit={handleSubmit} className="space-y-4">
             <input
               type="text"
+              name="name"
               placeholder="Your name"
+              value={formData.name}
+              onChange={handleChange}
               className="w-full bg-white/10 border border-white/20 rounded-lg py-3 px-4 text-white placeholder-gray-300 focus:outline-none focus:border-[#6BBE49]"
             />
+
             <input
               type="email"
+              name="email"
               placeholder="Your email"
+              value={formData.email}
+              onChange={handleChange}
+              required
               className="w-full bg-white/10 border border-white/20 rounded-lg py-3 px-4 text-white placeholder-gray-300 focus:outline-none focus:border-[#6BBE49]"
             />
+
             <textarea
               rows={4}
+              name="message"
               placeholder="Your message"
+              value={formData.message}
+              onChange={handleChange}
+              required
               className="w-full bg-white/10 border border-white/20 rounded-lg py-3 px-4 text-white placeholder-gray-300 focus:outline-none focus:border-[#6BBE49]"
             ></textarea>
 
@@ -73,6 +154,7 @@ export default function Footer() {
             </button>
           </form>
         </div>
+
 
         {/* RIGHT — Contact Info */}
         <div className="text-center lg:text-left">
