@@ -18,6 +18,33 @@ const DELIVERY_REGIONS: DeliveryRegion[] = [
     areas: ["Ikeja", "Lekki", "VI", "Yaba", "Surulere", "Ikoyi"],
   },
   {
+    region: "Lagos West",
+    cost: 4500,
+    areas: [
+      "Agege",
+      "Ajeromi-Ifelodun",
+      "Alimosho",
+      "Ifako-Ijaiye",
+      "Mushin",
+      "Oshodi-Isolo",
+      "Ojo",
+      "Shomolu",
+    ],
+  },
+  {
+    region: "Lagos East",
+    cost: 4500,
+    areas: [
+      "Apapa",
+      "Amuwo-Odofin",
+      "Kosofe",
+      "Ikorodu",
+      "Ibeju-Lekki",
+      "Epe",
+      "Lagos Island",
+    ],
+  },
+  {
     region: "Lagos Borders (Ajah, Ikorodu, Badagry)",
     cost: 4500,
     areas: ["Ajah", "Ikorodu", "Badagry"],
@@ -28,9 +55,21 @@ const DELIVERY_REGIONS: DeliveryRegion[] = [
     areas: ["Ekiti", "Ogun", "Ondo", "Osun", "Oyo"],
   },
   {
-    region: "Abia, Anambra, Bayelsa, Delta, Ebonyi, Edo, Enugu, Imo, Kwara, Rivers",
+    region:
+      "Abia, Anambra, Bayelsa, Delta, Ebonyi, Edo, Enugu, Imo, Kwara, Rivers",
     cost: 5500,
-    areas: ["Abia", "Anambra", "Bayelsa", "Delta", "Ebonyi", "Edo", "Enugu", "Imo", "Kwara", "Rivers"],
+    areas: [
+      "Abia",
+      "Anambra",
+      "Bayelsa",
+      "Delta",
+      "Ebonyi",
+      "Edo",
+      "Enugu",
+      "Imo",
+      "Kwara",
+      "Rivers",
+    ],
   },
   {
     region: "FCT",
@@ -67,7 +106,8 @@ const DELIVERY_REGIONS: DeliveryRegion[] = [
     cost: 6500,
     areas: ["Akwa Ibom", "Cross River"],
   },
-]
+];
+
 
 export default function CheckoutPage() {
   const { items, getTotalPrice, clearCart } = useCart()
@@ -83,8 +123,28 @@ export default function CheckoutPage() {
   const total = subtotal + shippingCost
 
  const generateInvoice = () => {
-  if (!selectedRegion) {
-    alert("Please select a delivery region")
+  // REQUIRED CHECKS
+  if (
+    !selectedRegion ||
+    !shippingAddress.name ||
+    !shippingAddress.surname ||
+    !shippingAddress.email ||
+    !shippingAddress.address1
+  ) {
+    alert("Please complete all required shipping details and select a delivery region.")
+    return
+  }
+
+  if (
+    billingDifferent &&
+    (
+      !billingAddress.name ||
+      !billingAddress.surname ||
+      !billingAddress.email ||
+      !billingAddress.address1
+    )
+  ) {
+    alert("Please complete all required billing details.")
     return
   }
 
@@ -95,30 +155,70 @@ export default function CheckoutPage() {
     )
     .join("\n")
 
+  const shippingBlock = `
+*SHIPPING ADDRESS*
+${shippingAddress.name} ${shippingAddress.surname}
+${shippingAddress.email}
+${shippingAddress.address1}
+${shippingAddress.address2 ? shippingAddress.address2 : ""}
+`
+
+  const billingBlock = billingDifferent
+    ? `
+*BILLING ADDRESS*
+${billingAddress.name} ${billingAddress.surname}
+${billingAddress.email}
+${billingAddress.address1}
+${billingAddress.address2 ? billingAddress.address2 : ""}
+`
+    : `
+*BILLING ADDRESS*
+Same as shipping address
+`
+
   const message = `*TAFE ORGANICS ORDER INVOICE*
 
-*Customer Details:*
-Name: ${customerInfo.name || "Not provided"}
-Phone: ${customerInfo.phone || "Not provided"}
+${shippingBlock}
+${billingBlock}
 
-*Order Items:*
+*ORDER ITEMS*
 ${itemsList}
 
-*Order Summary:*
+*ORDER SUMMARY*
 Subtotal: ₦${subtotal.toLocaleString()}.00
 Delivery Region: ${selectedRegion.region}
 Shipping Cost: ₦${shippingCost.toLocaleString()}.00
 *TOTAL: ₦${total.toLocaleString()}.00*
 
-Thank you for your order!`
+Thank you for shopping with Táfe Organics 🌿`
 
-    const encodedMessage = encodeURIComponent(message)
+  const encodedMessage = encodeURIComponent(message)
+
+  // SEND TO TAFE ORGANICS NUMBER (FIXED)
   const whatsappURL = `https://wa.me/2348108400962?text=${encodedMessage}`
 
+  clearCart()
+  window.open(whatsappURL, "_blank")
+}
 
-    clearCart()
-    window.open(whatsappURL, "_blank")
-  }
+  const [billingDifferent, setBillingDifferent] = useState(false)
+
+const [shippingAddress, setShippingAddress] = useState({
+  name: "",
+  surname: "",
+  email: "",
+  address1: "",
+  address2: "",
+})
+
+const [billingAddress, setBillingAddress] = useState({
+  name: "",
+  surname: "",
+  email: "",
+  address1: "",
+  address2: "",
+})
+
 
   if (items.length === 0) {
     return (
@@ -171,26 +271,159 @@ Thank you for your order!`
               </div>
             </div>
 
-            {/* Customer Information */}
-            <div className="bg-white rounded-lg p-6 shadow-sm">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Contact Information</h2>
-              <div className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Full Name (optional) *"
-                  value={customerInfo.name}
-                  onChange={(e) => setCustomerInfo({ ...customerInfo, name: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#6BBE49]"
-                />
-                <input
-                  type="tel"
-                  placeholder="Phone Number (optional) *"
-                  value={customerInfo.phone}
-                  onChange={(e) => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#6BBE49]"
-                />
-              </div>
-            </div>
+  {/* Shipping Address */}
+<div className="bg-white rounded-lg p-6 shadow-sm">
+  <h2 className="text-xl font-bold text-gray-900 mb-4">
+    Shipping Address
+  </h2>
+
+  <div className="grid md:grid-cols-2 gap-4">
+    <input
+      type="text"
+      placeholder="Name *"
+      value={shippingAddress.name}
+      onChange={(e) =>
+        setShippingAddress({ ...shippingAddress, name: e.target.value })
+      }
+      className="w-full px-4 py-3 border border-gray-300 rounded-lg
+      focus:outline-none focus:border-[#6BBE49]
+      focus:ring-2 focus:ring-[#6BBE49]/20 transition"
+    />
+
+    <input
+      type="text"
+      placeholder="Surname *"
+      value={shippingAddress.surname}
+      onChange={(e) =>
+        setShippingAddress({ ...shippingAddress, surname: e.target.value })
+      }
+      className="w-full px-4 py-3 border border-gray-300 rounded-lg
+      focus:outline-none focus:border-[#6BBE49]
+      focus:ring-2 focus:ring-[#6BBE49]/20 transition"
+    />
+
+    <input
+      type="email"
+      placeholder="Email *"
+      value={shippingAddress.email}
+      onChange={(e) =>
+        setShippingAddress({ ...shippingAddress, email: e.target.value })
+      }
+      className="w-full px-4 py-3 border border-gray-300 rounded-lg
+      focus:outline-none focus:border-[#6BBE49]
+      focus:ring-2 focus:ring-[#6BBE49]/20 transition md:col-span-2"
+    />
+
+    <input
+      type="text"
+      placeholder="Address Line 1 *"
+      value={shippingAddress.address1}
+      onChange={(e) =>
+        setShippingAddress({ ...shippingAddress, address1: e.target.value })
+      }
+      className="w-full px-4 py-3 border border-gray-300 rounded-lg
+      focus:outline-none focus:border-[#6BBE49]
+      focus:ring-2 focus:ring-[#6BBE49]/20 transition md:col-span-2"
+    />
+
+    <input
+      type="text"
+      placeholder="Address Line 2 (optional)"
+      value={shippingAddress.address2}
+      onChange={(e) =>
+        setShippingAddress({ ...shippingAddress, address2: e.target.value })
+      }
+      className="w-full px-4 py-3 border border-gray-300 rounded-lg
+      focus:outline-none focus:border-[#6BBE49]
+      focus:ring-2 focus:ring-[#6BBE49]/20 transition md:col-span-2"
+    />
+  </div>
+
+  {/* Toggle */}
+  <label className="flex items-center gap-3 mt-6 cursor-pointer">
+    <input
+      type="checkbox"
+      checked={billingDifferent}
+      onChange={() => setBillingDifferent(!billingDifferent)}
+      className="w-4 h-4 accent-[#6BBE49]"
+    />
+    <span className="text-sm text-gray-700">
+      Billing address is different from shipping address
+    </span>
+  </label>
+</div>
+
+{billingDifferent && (
+  <div className="bg-white rounded-lg p-6 shadow-sm mt-6">
+    <h2 className="text-xl font-bold text-gray-900 mb-4">
+      Billing Address
+    </h2>
+
+    <div className="grid md:grid-cols-2 gap-4">
+      <input
+        type="text"
+        placeholder="Name *"
+        value={billingAddress.name}
+        onChange={(e) =>
+          setBillingAddress({ ...billingAddress, name: e.target.value })
+        }
+        className="w-full px-4 py-3 border border-gray-300 rounded-lg
+        focus:outline-none focus:border-[#6BBE49]
+        focus:ring-2 focus:ring-[#6BBE49]/20 transition"
+      />
+
+      <input
+        type="text"
+        placeholder="Surname *"
+        value={billingAddress.surname}
+        onChange={(e) =>
+          setBillingAddress({ ...billingAddress, surname: e.target.value })
+        }
+        className="w-full px-4 py-3 border border-gray-300 rounded-lg
+        focus:outline-none focus:border-[#6BBE49]
+        focus:ring-2 focus:ring-[#6BBE49]/20 transition"
+      />
+
+      <input
+        type="email"
+        placeholder="Email *"
+        value={billingAddress.email}
+        onChange={(e) =>
+          setBillingAddress({ ...billingAddress, email: e.target.value })
+        }
+        className="w-full px-4 py-3 border border-gray-300 rounded-lg
+        focus:outline-none focus:border-[#6BBE49]
+        focus:ring-2 focus:ring-[#6BBE49]/20 transition md:col-span-2"
+      />
+
+      <input
+        type="text"
+        placeholder="Address Line 1 *"
+        value={billingAddress.address1}
+        onChange={(e) =>
+          setBillingAddress({ ...billingAddress, address1: e.target.value })
+        }
+        className="w-full px-4 py-3 border border-gray-300 rounded-lg
+        focus:outline-none focus:border-[#6BBE49]
+        focus:ring-2 focus:ring-[#6BBE49]/20 transition md:col-span-2"
+      />
+
+      <input
+        type="text"
+        placeholder="Address Line 2 (optional)"
+        value={billingAddress.address2}
+        onChange={(e) =>
+          setBillingAddress({ ...billingAddress, address2: e.target.value })
+        }
+        className="w-full px-4 py-3 border border-gray-300 rounded-lg
+        focus:outline-none focus:border-[#6BBE49]
+        focus:ring-2 focus:ring-[#6BBE49]/20 transition md:col-span-2"
+      />
+    </div>
+  </div>
+)}
+
+
 
             {/* Delivery Region Selection */}
             <div className="bg-white rounded-lg p-6 shadow-sm">
