@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useCart } from "@/contexts/cart-context"
 import { ChevronDown } from "lucide-react"
 import Link from "next/link"
+import emailjs from "@emailjs/browser";
 
 interface DeliveryRegion {
   region: string
@@ -112,6 +113,8 @@ const DELIVERY_REGIONS: DeliveryRegion[] = [
 export default function CheckoutPage() {
   const { items, getTotalPrice, clearCart } = useCart()
   const [selectedRegion, setSelectedRegion] = useState<DeliveryRegion | null>(null)
+  const [isProcessing, setIsProcessing] = useState(false)
+
   const [customerInfo, setCustomerInfo] = useState({
     name: "",
     phone: "",
@@ -192,14 +195,70 @@ Shipping Cost: ₦${shippingCost.toLocaleString()}.00
 
 Thank you for shopping with Táfe Organics 🌿`
 
-  const encodedMessage = encodeURIComponent(message)
+ const encodedMessage = encodeURIComponent(message)
 
-  // SEND TO TAFE ORGANICS NUMBER (FIXED)
-  const whatsappURL = `https://wa.me/2348108400962?text=${encodedMessage}`
-
-  clearCart()
-  window.open(whatsappURL, "_blank")
+  return `https://wa.me/2348108400962?text=${encodedMessage}`
 }
+const handleCheckout = async () => {
+  if (isProcessing) return
+  setIsProcessing(true)
+
+  // 1. Validate required fields
+  if (
+    !shippingAddress.name ||
+    !shippingAddress.email ||
+    !shippingAddress.address1
+  ) {
+    alert("Please fill all required shipping details")
+    setIsProcessing(false)
+    return
+  }
+
+  // 2. Generate WhatsApp invoice link
+  const whatsappLink = generateInvoice()
+  if (!whatsappLink) {
+    setIsProcessing(false)
+    return
+  }
+
+  // 3. Send reminder email (non-blocking)
+  try {
+    const result = await emailjs.send(
+      "service_unlpgvc",
+      "template_2w6cdlf",
+      {
+       customer_name: billingDifferent
+      ? billingAddress.name
+      : shippingAddress.name,
+
+    customer_email: billingDifferent
+      ? billingAddress.email
+      : shippingAddress.email,
+        whatsapp_link: whatsappLink,
+      } ,"dZs6oorAk8XQui-Jp"
+    )
+   
+    console.log("EmailJS success:", result)
+  } catch (error: any) {
+    console.error("EmailJS failed:", {
+      name: error?.name,
+      message: error?.message,
+      text: error?.text,
+    })
+    // Do NOT block checkout
+  }
+
+  // 4. Open WhatsApp in new tab
+  window.open(whatsappLink, "_blank", "noopener,noreferrer")
+
+  // 5. Clear cart AFTER redirect intent
+  setTimeout(() => {
+    clearCart()
+  }, 800)
+
+  setIsProcessing(false)
+}
+
 
   const [billingDifferent, setBillingDifferent] = useState(false)
 
@@ -247,8 +306,33 @@ const [billingAddress, setBillingAddress] = useState({
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
+          
           {/* Order Items */}
           <div className="md:col-span-2 space-y-6">
+            {/* Shipping Policy */}
+<div className="bg-[#F7FCEB] border-l-4 border-[#6BBE49] rounded-lg p-5 shadow-sm mt-6">
+  <h3 className="text-sm font-semibold text-[#3E6B2C] mb-2">
+    TAFE ORGANICS – Shipping Policy
+  </h3>
+
+  <p className="text-xs text-gray-700 mb-2 leading-relaxed">
+    Orders are processed within <strong>1–2 business days</strong>. Orders placed
+    on weekends or public holidays will be processed the next business day.
+  </p>
+
+  <p className="text-xs text-gray-700 mb-2 leading-relaxed">
+    <strong className="text-gray-800">Delivery Timeline:</strong><br />
+    • Within Lagos: 1–3 business days<br />
+    • Outside Lagos: 2–5 business days<br />
+    • International: 7–14 business days
+  </p>
+
+  <p className="text-[11px] text-gray-500 italic">
+    Delivery times are estimates and may vary due to courier delays or unforeseen
+    circumstances.
+  </p>
+</div>
+
             {/* Order Items Section */}
             <div className="bg-white rounded-lg p-6 shadow-sm">
               <h2 className="text-xl font-bold text-gray-900 mb-4">Order Items</h2>
@@ -425,64 +509,80 @@ const [billingAddress, setBillingAddress] = useState({
 
 
 
-            {/* Delivery Region Selection */}
-            <div className="bg-white rounded-lg p-6 shadow-sm">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Delivery Region *</h2>
-              <div className="space-y-3">
-                {DELIVERY_REGIONS.map((region) => (
-                  <div key={region.region} className="border border-gray-200 rounded-lg overflow-hidden">
-                    <button
-                      onClick={() => {
-                        setSelectedRegion(region)
-                        setExpandedRegion(expandedRegion === region.region ? null : region.region)
-                      }}
-                      className={`w-full px-4 py-3 flex items-center justify-between transition ${
-                        selectedRegion?.region === region.region
-                          ? "bg-[#6BBE49] text-white"
-                          : "bg-gray-50 hover:bg-gray-100"
-                      }`}
-                    >
-                      <div className="flex items-center gap-3 text-left">
-                        <input
-                          type="radio"
-                          name="delivery-region"
-                          checked={selectedRegion?.region === region.region}
-                          onChange={() => setSelectedRegion(region)}
-                          className="w-4 h-4"
-                        />
-                        <div>
-                          <p className="font-semibold">{region.region}</p>
-                          <p
-                            className={`text-sm ${selectedRegion?.region === region.region ? "text-white/90" : "text-gray-600"}`}
-                          >
-                            Shipping: ₦{region.cost.toLocaleString()}
-                          </p>
-                        </div>
-                      </div>
-                      <ChevronDown
-                        className={`w-5 h-5 transition ${expandedRegion === region.region ? "rotate-180" : ""}`}
-                      />
-                    </button>
+ {/* Delivery Region Selection */}
+<div className="bg-white rounded-lg p-6 shadow-sm">
+  <h2 className="text-xl font-bold text-gray-900 mb-4">
+    Delivery Region *
+  </h2>
 
-                    {/* Expanded Details */}
-                    {expandedRegion === region.region && (
-                      <div
-                        className={`px-4 py-3 border-t ${selectedRegion?.region === region.region ? "border-[#5aaa3f] bg-[#5aaa3f]/10" : "border-gray-200 bg-gray-50"}`}
-                      >
-                        <p className="text-sm font-semibold text-gray-700 mb-2">Included Areas:</p>
-                        <div className="flex flex-wrap gap-2">
-                          {region.areas.map((area) => (
-                            <span key={area} className="bg-gray-200 text-gray-800 text-xs px-3 py-1 rounded-full">
-                              {area}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
+  <div className="space-y-3">
+    {DELIVERY_REGIONS.map((region) => (
+      <div
+        key={region.region}
+        className="border border-gray-200 rounded-lg overflow-hidden"
+      >
+        {/* Region Header */}
+        <button
+          type="button"
+          onClick={() => setSelectedRegion(region)}
+          className={`w-full px-4 py-3 flex items-center justify-between transition ${
+            selectedRegion?.region === region.region
+              ? "bg-[#6BBE49] text-white"
+              : "bg-gray-50 hover:bg-gray-100"
+          }`}
+        >
+          <div className="flex items-center gap-3 text-left">
+            <input
+              type="radio"
+              name="delivery-region"
+              checked={selectedRegion?.region === region.region}
+              onChange={() => setSelectedRegion(region)}
+              className="w-4 h-4"
+            />
+            <div>
+              <p className="font-semibold">{region.region}</p>
+              <p
+                className={`text-sm ${
+                  selectedRegion?.region === region.region
+                    ? "text-white/90"
+                    : "text-gray-600"
+                }`}
+              >
+                Shipping: ₦{region.cost.toLocaleString()}
+              </p>
             </div>
+          </div>
+        </button>
+
+        {/* Areas — ALWAYS VISIBLE */}
+        <div
+          className={`px-4 py-3 border-t ${
+            selectedRegion?.region === region.region
+              ? "border-[#5aaa3f] bg-[#5aaa3f]/10"
+              : "border-gray-200 bg-gray-50"
+          }`}
+        >
+          <p className="text-sm font-semibold text-gray-700 mb-2">
+            Included Areas:
+          </p>
+
+          <div className="flex flex-wrap gap-2">
+            {region.areas.map((area) => (
+              <span
+                key={area}
+                className="bg-gray-200 text-gray-800 text-xs px-3 py-1 rounded-full"
+              >
+                {area}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+
           </div>
 
           {/* Order Summary Sidebar */}
@@ -507,11 +607,38 @@ const [billingAddress, setBillingAddress] = useState({
               </div>
 
               <button
-                onClick={generateInvoice}
-                className="w-full bg-[#6BBE49] text-white py-3 rounded-lg font-semibold hover:bg-[#5aaa3f] transition disabled:bg-gray-400 disabled:cursor-not-allowed"
-                disabled={!selectedRegion}
+                onClick={handleCheckout}
+               className="w-full bg-[#6BBE49] text-white py-3 rounded-lg font-semibold hover:bg-[#5aaa3f] transition disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                disabled={!selectedRegion || isProcessing}
               >
-                Complete Order via WhatsApp
+              
+  {isProcessing ? (
+    <>
+      <svg
+        className="animate-spin h-5 w-5 text-white"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          className="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          strokeWidth="4"
+        />
+        <path
+          className="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+        />
+      </svg>
+      Processing order…
+    </>
+  ) : (
+    "Complete Order via WhatsApp"
+  )}
               </button>
 
               <button
@@ -520,6 +647,8 @@ const [billingAddress, setBillingAddress] = useState({
               >
                 Continue Shopping
               </button>
+   
+
             </div>
           </div>
         </div>

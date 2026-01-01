@@ -125,7 +125,7 @@ export default function ContactPageContent() {
             >
               <Mail className="w-12 h-12 text-[#6BBE49] mx-auto mb-4" />
               <h3 className="text-xl font-bold mb-2">Email</h3>
-              <p className="text-gray-600">support@tafeorganics.com</p>
+              <p className="text-gray-600">info@tafeorganics.com</p>
             </div>
 
             {/* Address */}

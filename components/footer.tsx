@@ -184,7 +184,7 @@ export default function Footer() {
 
           <p className="flex items-center justify-center lg:justify-start gap-2 text-gray-300">
             <Mail size={18} className="text-[#6BBE49]" />
-            support@tafeorganics.com
+            info@tafeorganics.com
           </p>
         </div>
       </div>
