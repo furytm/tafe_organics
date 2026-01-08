@@ -1,11 +1,13 @@
-import { kv } from "@vercel/kv"
+import Redis from "ioredis"
 import { NextResponse } from "next/server"
 
-export async function POST() {
-  const current = (await kv.get<number>("tafe_order_id")) ?? 0
-  const next = current + 1
+const redis = new Redis(process.env.REDIS_URL!)
 
-  await kv.set("tafe_order_id", next)
+export async function POST() {
+  const current = await redis.get("tafe_order_id")
+  const next = current ? parseInt(current, 10) + 1 : 1
+
+  await redis.set("tafe_order_id", next.toString())
 
   return NextResponse.json({
     orderId: next.toString().padStart(4, "0"),
