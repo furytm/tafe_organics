@@ -145,13 +145,16 @@ export default function AboutPageContent() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 px-4 bg-white">
+       <section className="py-20 px-4 bg-gradient-to-b from-white via-white to-green-50">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-gray-800 text-white p-12 rounded-lg mb-8">
-            <h2 className="text-3xl font-bold mb-2">BECOME A STOCKIST</h2>
-            <p className="text-lg">Frequently Asked Questions</p>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl playfairbold font-bold text-[#6BBE49] mb-4">
+              Frequently Asked Questions
+            </h2>
+            <div className="h-1 w-24 bg-[#6BBE49] mx-auto rounded-full"></div>
           </div>
-          <div className="space-y-4">
+
+          <div className="space-y-3">
             {[
               {
                 q: "Why doesn't your soaps small like flowers or candy?",
@@ -186,11 +189,19 @@ export default function AboutPageContent() {
                 a: "We offer free standard shipping on orders over ₦100k.",
               },
             ].map((faq, idx) => (
-              <details key={idx} className="border-b pb-4 cursor-pointer group">
-                <summary className="font-bold text-amber-900 text-lg group-open:text-amber-700 transition">
-                  {faq.q}
+              <details
+                key={idx}
+                className="group border border-gray-200 rounded-lg overflow-hidden transition-all duration-300 hover:border-[#6BBE49] hover:shadow-md"
+              >
+                <summary className="flex items-center justify-between w-full px-6 py-4 font-semibold text-gray-900 bg-white hover:bg-green-50 cursor-pointer transition-colors duration-200 group-open:bg-green-50 group-open:text-[#6BBE49]">
+                  <span>{faq.q}</span>
+                  <span className="text-xl text-[#6BBE49] transition-transform duration-300 group-open:rotate-180">
+                    ↓
+                  </span>
                 </summary>
-                <p className="text-gray-700 mt-2 text-base">{faq.a}</p>
+                <div className="px-6 py-4 bg-white border-t border-gray-100">
+                  <p className="text-gray-700 leading-relaxed">{faq.a}</p>
+                </div>
               </details>
             ))}
           </div>

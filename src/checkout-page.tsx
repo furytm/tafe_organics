@@ -8,9 +8,11 @@ import emailjs from "@emailjs/browser";
 
 interface DeliveryRegion {
   region: string
-  cost: number
+  cost: number | null
+  costLabel?: string
   areas: string[]
 }
+
 
 const DELIVERY_REGIONS: DeliveryRegion[] = [
   {
@@ -18,6 +20,7 @@ const DELIVERY_REGIONS: DeliveryRegion[] = [
     cost: 3000,
     areas: ["Ikeja", "Lekki", "VI", "Yaba", "Surulere", "Ikoyi"],
   },
+  
   // {
   //   region: "Lagos West",
   //   cost: 4500,
@@ -106,7 +109,13 @@ const DELIVERY_REGIONS: DeliveryRegion[] = [
     region: "Akwa Ibom, Cross River",
     cost: 6500,
     areas: ["Akwa Ibom", "Cross River"],
-  },
+  },{
+  region: "International",
+  cost: null,
+  costLabel: "To be discussed",
+  areas: ["Outside Nigeria"],
+},
+
 ];
 const countries = Country.getAllCountries()
 const nigeriaStates = State.getStatesOfCountry("NG")
@@ -132,6 +141,21 @@ export default function CheckoutPage() {
   const subtotal = getTotalPrice()
   const shippingCost = selectedRegion?.cost || 0
   const total = subtotal + shippingCost
+  const [errors, setErrors] = useState<{
+  shipping?: {
+    fullName?: string
+    email?: string
+    country?: string
+    state?: string
+  }
+  billing?: {
+    fullName?: string
+    email?: string
+    country?: string
+    state?: string
+  }
+}>({})
+
 
   const [deliveryMethod, setDeliveryMethod] = useState<"delivery" | "pickup">(
     "delivery"
@@ -159,6 +183,8 @@ export default function CheckoutPage() {
         !selectedRegion ||
         !shippingAddress.fullName ||
         !shippingAddress.phone ||
+          !shippingAddress.country ||
+            !shippingAddress.state ||
         !shippingAddress.address1
       ) {
         alert(
@@ -172,6 +198,8 @@ export default function CheckoutPage() {
         (
           !billingAddress.fullName ||
           !billingAddress.phone ||
+           !billingAddress.country ||
+            !billingAddress.state ||
           !billingAddress.address1
         )
       ) {
@@ -201,6 +229,7 @@ export default function CheckoutPage() {
 *SHIPPING ADDRESS*
 ${shippingAddress.fullName}
 ${shippingAddress.phone}
+${shippingAddress.email}
 ${shippingAddress.address1}
 ${shippingAddress.address2 ? shippingAddress.address2 : ""}
 `
@@ -213,6 +242,7 @@ ${shippingAddress.address2 ? shippingAddress.address2 : ""}
 *BILLING ADDRESS*
 ${billingAddress.fullName}
 ${billingAddress.phone}
+${billingAddress.email}
 ${billingAddress.address1}
 ${billingAddress.address2 ? billingAddress.address2 : ""}
 `
@@ -260,15 +290,20 @@ ${itemsList}
 *ORDER SUMMARY*
 Subtotal: ₦${subtotal.toLocaleString()}.00
 
-  Delivery Method: ${deliveryMethod === "pickup"
-        ? "Pickup"
-        : selectedRegion?.region
-      }
+ Delivery Method: ${
+  deliveryMethod === "pickup"
+    ? "Pickup"
+    : selectedRegion?.region || "Not selected"
+}
 
-Shipping Cost: ${deliveryMethod === "pickup"
-        ? "₦0.00"
-        : `₦${shippingCost.toLocaleString()}.00`
-      }
+Shipping Cost: ${
+  deliveryMethod === "pickup"
+    ? "₦0.00"
+    : selectedRegion && selectedRegion.cost !== null
+        ? `₦${shippingCost.toLocaleString()}.00`
+        : "To be discussed (International)"
+}
+
 *TOTAL: ₦${total.toLocaleString()}.00*
 
 Thank you for your order! 🌿
@@ -424,6 +459,9 @@ if (deliveryMethod === "delivery") {
       </div>
     )
   }
+  const isValidEmail = (email: string) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
@@ -578,20 +616,43 @@ if (deliveryMethod === "delivery") {
                 </h2>
 
                 <div className="grid md:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder="Full Name *"
-                    value={shippingAddress.fullName}
-                    onChange={(e) =>
-                      setShippingAddress({
-                        ...shippingAddress,
-                        fullName: e.target.value,
-                      })
-                    }
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg
-        focus:outline-none focus:border-[#6BBE49]
-        focus:ring-2 focus:ring-[#6BBE49]/20 transition md:col-span-2"
-                  />
+                <div className="md:col-span-1">
+<div className="md:col-span-2">
+  <input
+    type="text"
+    placeholder="Full Name *"
+    value={shippingAddress.fullName}
+    onChange={(e) => {
+      const value = e.target.value
+      setShippingAddress({ ...shippingAddress, fullName: value })
+
+      setErrors((prev) => ({
+        ...prev,
+        shipping: {
+          ...prev.shipping,
+          fullName: !value ? "Full name is required" : undefined,
+        },
+      }))
+    }}
+    className={`w-full px-4 py-3 border rounded-lg transition
+      focus:outline-none focus:ring-2 focus:ring-[#6BBE49]/20
+      ${
+        errors.shipping?.fullName
+          ? "border-red-500"
+          : "border-gray-300 focus:border-[#6BBE49]"
+      }`}
+  />
+
+  {errors.shipping?.fullName && (
+    <p className="mt-1 text-sm text-red-600">
+      {errors.shipping.fullName}
+    </p>
+  )}
+</div>
+
+ 
+</div>
+
 
                   <input
                     type="tel"
@@ -608,79 +669,156 @@ if (deliveryMethod === "delivery") {
         focus:ring-2 focus:ring-[#6BBE49]/20 transition"
                   />
 
-                  <input
-                    type="email"
-                    placeholder="Email *"
-                    value={shippingAddress.email}
-                    onChange={(e) =>
-                      setShippingAddress({
-                        ...shippingAddress,
-                        email: e.target.value,
-                      })
-                    }
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg
-        focus:outline-none focus:border-[#6BBE49]
-        focus:ring-2 focus:ring-[#6BBE49]/20 transition"
-                  />
+                  <div className="md:col-span-1">
+  <input
+    type="email"
+    placeholder="Email *"
+    value={shippingAddress.email}
+    onChange={(e) => {
+      const value = e.target.value
+      setShippingAddress({ ...shippingAddress, email: value })
 
-                  <select
-                    value={shippingAddress.country}
-                    onChange={(e) =>
-                      setShippingAddress({
-                        ...shippingAddress,
-                        country: e.target.value,
-                        state: "",
-                        lga: "",
-                      })
-                    }
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg
+      setErrors((prev) => ({
+        ...prev,
+        shipping: {
+          ...prev.shipping,
+          email:
+            !value
+              ? "Email is required"
+              : !isValidEmail(value)
+              ? "Enter a valid email address"
+              : undefined,
+        },
+      }))
+    }}
+    className={`w-full px-4 py-3 border rounded-lg transition
+      focus:outline-none focus:ring-2 focus:ring-[#6BBE49]/20
+      ${
+        errors.shipping?.email
+          ? "border-red-500"
+          : "border-gray-300 focus:border-[#6BBE49]"
+      }`}
+  />
+
+  {errors.shipping?.email && (
+    <p className="mt-1 text-sm text-red-600">
+      {errors.shipping.email}
+    </p>
+  )}
+</div>
+<select
+  value={shippingAddress.country}
+  onChange={(e) => {
+    const value = e.target.value
+
+    setShippingAddress({
+      ...shippingAddress,
+      country: value,
+      state: "",
+      lga: "",
+    })
+
+    setErrors((prev) => ({
+      ...prev,
+      shipping: {
+        ...prev.shipping,
+        country: !value ? "Country is required" : undefined,
+      },
+    }))
+  }}
+  className="w-full px-4 py-3 border border-gray-300 rounded-lg
   focus:outline-none focus:border-[#6BBE49]
   focus:ring-2 focus:ring-[#6BBE49]/20 transition"
-                  >
-                    {countries.map((country) => (
-                      <option key={country.isoCode} value={country.isoCode}>
-                        {country.name}
-                      </option>
-                    ))}
-                  </select>
+>
+  <option value="">Select Country</option>
+  {countries.map((country) => (
+    <option key={country.isoCode} value={country.isoCode}>
+      {country.name}
+    </option>
+  ))}
+</select>
+
+{errors.shipping?.country && (
+  <p className="mt-1 text-sm text-red-600">
+    {errors.shipping.country}
+  </p>
+)}
 
 
-                  {shippingAddress.country === "NG" ? (
-                    <select
-                      value={shippingAddress.state}
-                      onChange={(e) =>
-                        setShippingAddress({
-                          ...shippingAddress,
-                          state: e.target.value,
-                        })
-                      }
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg
-    focus:outline-none focus:border-[#6BBE49]
-    focus:ring-2 focus:ring-[#6BBE49]/20 transition"
-                    >
-                      <option value="">Select State</option>
-                      {nigeriaStates.map((state) => (
-                        <option key={state.isoCode} value={state.name}>
-                          {state.name}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <input
-                      type="text"
-                      placeholder="State / Province *"
-                      value={shippingAddress.state}
-                      onChange={(e) =>
-                        setShippingAddress({
-                          ...shippingAddress,
-                          state: e.target.value,
-                        })
-                      }
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg
-    focus:outline-none focus:border-[#6BBE49]
-    focus:ring-2 focus:ring-[#6BBE49]/20 transition"
-                    />
-                  )}
+                 {shippingAddress.country === "NG" ? (
+  <>
+    <select
+      value={shippingAddress.state}
+      onChange={(e) => {
+        const value = e.target.value
+
+        setShippingAddress({
+          ...shippingAddress,
+          state: value,
+        })
+
+        setErrors((prev) => ({
+          ...prev,
+          shipping: {
+            ...prev.shipping,
+            state: !value ? "State is required" : undefined,
+          },
+        }))
+      }}
+      className="w-full px-4 py-3 border border-gray-300 rounded-lg
+      focus:outline-none focus:border-[#6BBE49]
+      focus:ring-2 focus:ring-[#6BBE49]/20 transition"
+    >
+      <option value="">Select State</option>
+      {nigeriaStates.map((state) => (
+        <option key={state.isoCode} value={state.name}>
+          {state.name}
+        </option>
+      ))}
+    </select>
+
+    {errors.shipping?.state && (
+      <p className="mt-1 text-sm text-red-600">
+        {errors.shipping.state}
+      </p>
+    )}
+  </>
+) : (
+
+                    <>
+    <input
+      type="text"
+      placeholder="State / Province *"
+      value={shippingAddress.state}
+      onChange={(e) => {
+        const value = e.target.value
+
+        setShippingAddress({
+          ...shippingAddress,
+          state: value,
+        })
+
+        setErrors((prev) => ({
+          ...prev,
+          shipping: {
+            ...prev.shipping,
+            state: !value ? "State is required" : undefined,
+          },
+        }))
+      }}
+      className="w-full px-4 py-3 border border-gray-300 rounded-lg
+      focus:outline-none focus:border-[#6BBE49]
+      focus:ring-2 focus:ring-[#6BBE49]/20 transition"
+    />
+
+    {errors.shipping?.state && (
+      <p className="mt-1 text-sm text-red-600">
+        {errors.shipping.state}
+      </p>
+    )}
+  </>
+)}
+
 
 
                   <input
@@ -753,20 +891,39 @@ if (deliveryMethod === "delivery") {
                 </h2>
 
                 <div className="grid md:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder="Full Name *"
-                    value={billingAddress.fullName}
-                    onChange={(e) =>
-                      setBillingAddress({
-                        ...billingAddress,
-                        fullName: e.target.value,
-                      })
-                    }
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg
-        focus:outline-none focus:border-[#6BBE49]
-        focus:ring-2 focus:ring-[#6BBE49]/20 transition md:col-span-2"
-                  />
+                <div className="md:col-span-2">
+  <input
+    type="text"
+    placeholder="Full Name *"
+    value={billingAddress.fullName}
+    onChange={(e) => {
+      const value = e.target.value
+      setShippingAddress({ ...shippingAddress, fullName: value })
+
+      setErrors((prev) => ({
+        ...prev,
+        shipping: {
+          ...prev.shipping,
+          fullName: !value ? "Full name is required" : undefined,
+        },
+      }))
+    }}
+    className={`w-full px-4 py-3 border rounded-lg transition
+      focus:outline-none focus:ring-2 focus:ring-[#6BBE49]/20
+      ${
+        errors.shipping?.fullName
+          ? "border-red-500"
+          : "border-gray-300 focus:border-[#6BBE49]"
+      }`}
+  />
+
+  {errors.shipping?.fullName && (
+    <p className="mt-1 text-sm text-red-600">
+      {errors.shipping.fullName}
+    </p>
+  )}
+</div>
+
 
                   <input
                     type="tel"
@@ -783,73 +940,159 @@ if (deliveryMethod === "delivery") {
         focus:ring-2 focus:ring-[#6BBE49]/20 transition"
                   />
 
-                  <input
-                    type="email"
-                    placeholder="Email *"
-                    value={billingAddress.email}
-                    onChange={(e) =>
-                      setBillingAddress({
-                        ...billingAddress,
-                        email: e.target.value,
-                      })
-                    }
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg
-        focus:outline-none focus:border-[#6BBE49]
-        focus:ring-2 focus:ring-[#6BBE49]/20 transition"
-                  />
+                 <div className="md:col-span-1">
+  <input
+    type="email"
+    placeholder="Email *"
+    value={billingAddress.email}
+    onChange={(e) => {
+      const value = e.target.value
+      setShippingAddress({ ...shippingAddress, email: value })
+
+      setErrors((prev) => ({
+        ...prev,
+        shipping: {
+          ...prev.shipping,
+          email:
+            !value
+              ? "Email is required"
+              : !isValidEmail(value)
+              ? "Enter a valid email address"
+              : undefined,
+        },
+      }))
+    }}
+    className={`w-full px-4 py-3 border rounded-lg transition
+      focus:outline-none focus:ring-2 focus:ring-[#6BBE49]/20
+      ${
+        errors.shipping?.email
+          ? "border-red-500"
+          : "border-gray-300 focus:border-[#6BBE49]"
+      }`}
+  />
+
+  {errors.shipping?.email && (
+    <p className="mt-1 text-sm text-red-600">
+      {errors.shipping.email}
+    </p>
+  )}
+</div>
+
                   {/* Country */}
-                  <select
-                    value={billingAddress.country}
-                    onChange={(e) =>
-                      setBillingAddress({
-                        ...billingAddress,
-                        country: e.target.value,
-                        state: "",
-                        lga: "",
-                      })
-                    }
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg
-        focus:outline-none focus:border-[#6BBE49]
-        focus:ring-2 focus:ring-[#6BBE49]/20 transition"
-                  >
-                    {countries.map((country) => (
-                      <option key={country.isoCode} value={country.isoCode}>
-                        {country.name}
-                      </option>
-                    ))}
-                  </select>
+                 <select
+  value={billingAddress.country}
+  onChange={(e) => {
+    const value = e.target.value
+
+    setBillingAddress({
+      ...billingAddress,
+      country: value,
+      state: "",
+      lga: "",
+    })
+
+    setErrors((prev) => ({
+      ...prev,
+      billing: {
+        ...prev.billing,
+        country: !value ? "Country is required" : undefined,
+      },
+    }))
+  }}
+  className="w-full px-4 py-3 border border-gray-300 rounded-lg
+  focus:outline-none focus:border-[#6BBE49]
+  focus:ring-2 focus:ring-[#6BBE49]/20 transition"
+>
+  <option value="">Select Country</option>
+  {countries.map((country) => (
+    <option key={country.isoCode} value={country.isoCode}>
+      {country.name}
+    </option>
+  ))}
+</select>
+
+{errors.billing?.country && (
+  <p className="mt-1 text-sm text-red-600">
+    {errors.billing.country}
+  </p>
+)}
+
 
                   {/* State */}
-                  {billingAddress.country === "NG" ? (
-                    <select
-                      value={billingAddress.state}
-                      onChange={(e) =>
-                        setBillingAddress({ ...billingAddress, state: e.target.value })
-                      }
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg
-          focus:outline-none focus:border-[#6BBE49]
-          focus:ring-2 focus:ring-[#6BBE49]/20 transition"
-                    >
-                      <option value="">Select State</option>
-                      {nigeriaStates.map((state) => (
-                        <option key={state.isoCode} value={state.name}>
-                          {state.name}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <input
-                      type="text"
-                      placeholder="State / Province *"
-                      value={billingAddress.state}
-                      onChange={(e) =>
-                        setBillingAddress({ ...billingAddress, state: e.target.value })
-                      }
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg
-          focus:outline-none focus:border-[#6BBE49]
-          focus:ring-2 focus:ring-[#6BBE49]/20 transition"
-                    />
-                  )}
+                {billingAddress.country === "NG" ? (
+  <>
+    <select
+      value={billingAddress.state}
+      onChange={(e) => {
+        const value = e.target.value
+
+        setBillingAddress({
+          ...billingAddress,
+          state: value,
+        })
+
+        setErrors((prev) => ({
+          ...prev,
+          billing: {
+            ...prev.billing,
+            state: !value ? "State is required" : undefined,
+          },
+        }))
+      }}
+      className="w-full px-4 py-3 border border-gray-300 rounded-lg
+      focus:outline-none focus:border-[#6BBE49]
+      focus:ring-2 focus:ring-[#6BBE49]/20 transition"
+    >
+      <option value="">Select State</option>
+      {nigeriaStates.map((state) => (
+        <option key={state.isoCode} value={state.name}>
+          {state.name}
+        </option>
+      ))}
+    </select>
+
+    {errors.billing?.state && (
+      <p className="mt-1 text-sm text-red-600">
+        {errors.billing.state}
+      </p>
+    )}
+  </>
+) : (
+
+                    <>
+    <input
+      type="text"
+      placeholder="State / Province *"
+      value={billingAddress.state}
+      onChange={(e) => {
+        const value = e.target.value
+
+        setBillingAddress({
+          ...billingAddress,
+          state: value,
+        })
+
+        setErrors((prev) => ({
+          ...prev,
+          billing: {
+            ...prev.billing,
+            state: !value ? "State is required" : undefined,
+          },
+        }))
+      }}
+      className="w-full px-4 py-3 border border-gray-300 rounded-lg
+      focus:outline-none focus:border-[#6BBE49]
+      focus:ring-2 focus:ring-[#6BBE49]/20 transition"
+    />
+
+    {errors.billing?.state && (
+      <p className="mt-1 text-sm text-red-600">
+        {errors.billing.state}
+      </p>
+    )}
+  </>
+)}
+
 
                   {/* LGA */}
                   <input
@@ -931,16 +1174,21 @@ if (deliveryMethod === "delivery") {
                 className="w-4 h-4"
               />
               <div>
-                <p className="font-semibold">{region.region}</p>
-                <p
-                  className={`text-sm ${
-                    selectedRegion?.region === region.region
-                      ? "text-white/90"
-                      : "text-gray-600"
-                  }`}
-                >
-                  Shipping: ₦{region.cost.toLocaleString()}
-                </p>
+               <p className="font-semibold">{region.region}</p>
+
+<p
+  className={`text-sm ${
+    selectedRegion?.region === region.region
+      ? "text-white/90"
+      : "text-gray-600"
+  }`}
+>
+  Shipping:{" "}
+  {region.cost !== null
+    ? `₦${region.cost.toLocaleString()}`
+    : region.costLabel}
+</p>
+
               </div>
             </div>
           </button>
@@ -971,6 +1219,12 @@ if (deliveryMethod === "delivery") {
         </div>
       ))}
     </div>
+    {selectedRegion?.region === "International" && (
+  <p className="text-sm text-gray-600 mt-2">
+    International shipping cost will be confirmed after order review.
+  </p>
+)}
+
   </div>
 )}
 
@@ -987,8 +1241,12 @@ if (deliveryMethod === "delivery") {
 
               <div className="space-y-3 pb-4 border-b border-gray-200">
                 <div className="flex justify-between text-gray-600">
-                  <span>Subtotal:</span>
-                  <span>₦{subtotal.toLocaleString()}.00</span>
+                 <span>
+  {selectedRegion?.cost !== null
+    ? `₦${shippingCost.toLocaleString()}.00`
+    : "To be discussed"}
+</span>
+
                 </div>
                 <div className="flex justify-between text-gray-600">
                   <span>Shipping:</span>
