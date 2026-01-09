@@ -10,7 +10,7 @@ interface DeliveryRegion {
   region: string
   cost: number | null
   costLabel?: string
-  areas: string[]
+
 }
 
 
@@ -18,105 +18,40 @@ const DELIVERY_REGIONS: DeliveryRegion[] = [
   {
     region: "Lagos Mainland and Island",
     cost: 3000,
-    areas: ["Ikeja", "Lekki", "VI", "Yaba", "Surulere", "Ikoyi"],
   },
-  
-  // {
-  //   region: "Lagos West",
-  //   cost: 4500,
-  //   areas: [
-  //     "Agege",
-  //     "Ajeromi-Ifelodun",
-  //     "Alimosho",
-  //     "Ifako-Ijaiye",
-  //     "Mushin",
-  //     "Oshodi-Isolo",
-  //     "Ojo",
-  //     "Shomolu",
-  //   ],
-  // },
-  // {
-  //   region: "Lagos East",
-  //   cost: 4500,
-  //   areas: [
-  //     "Apapa",
-  //     "Amuwo-Odofin",
-  //     "Kosofe",
-  //     "Ikorodu",
-  //     "Ibeju-Lekki",
-  //     "Epe",
-  //     "Lagos Island",
-  //   ],
-  // },
   {
     region: "Lagos Borders (Ajah, Ikorodu, Badagry)",
     cost: 4500,
-    areas: ["Ajah", "Ikorodu", "Badagry"],
   },
   {
     region: "Ekiti, Ogun, Ondo, Osun, Oyo",
     cost: 4500,
-    areas: ["Ekiti", "Ogun", "Ondo", "Osun", "Oyo"],
   },
   {
     region:
       "Abia, Anambra, Bayelsa, Delta, Ebonyi, Edo, Enugu, Imo, Kwara, Rivers",
     cost: 5500,
-    areas: [
-      "Abia",
-      "Anambra",
-      "Bayelsa",
-      "Delta",
-      "Ebonyi",
-      "Edo",
-      "Enugu",
-      "Imo",
-      "Kwara",
-      "Rivers",
-    ],
   },
   {
     region: "FCT",
     cost: 6000,
-    areas: ["Abuja"],
   },
   {
     region:
       "Adamawa, Bauchi, Benue, Borno, Gombe, Jigawa, Kaduna, Kano, Katsina, Kebbi, Kogi, Nasarawa, Niger, Plateau, Sokoto, Taraba, Yobe, Zamfara",
     cost: 6000,
-    areas: [
-      "Adamawa",
-      "Bauchi",
-      "Benue",
-      "Borno",
-      "Gombe",
-      "Jigawa",
-      "Kaduna",
-      "Kano",
-      "Katsina",
-      "Kebbi",
-      "Kogi",
-      "Nasarawa",
-      "Niger",
-      "Plateau",
-      "Sokoto",
-      "Taraba",
-      "Yobe",
-      "Zamfara",
-    ],
   },
   {
     region: "Akwa Ibom, Cross River",
     cost: 6500,
-    areas: ["Akwa Ibom", "Cross River"],
-  },{
-  region: "International",
-  cost: null,
-  costLabel: "To be discussed",
-  areas: ["Outside Nigeria"],
-},
+  },
+  {
+    region: "International",
+    cost: null,
+    costLabel: "To be discussed",
+  },
+]
 
-];
 const countries = Country.getAllCountries()
 const nigeriaStates = State.getStatesOfCountry("NG")
 
@@ -139,8 +74,8 @@ export default function CheckoutPage() {
   const [expandedRegion, setExpandedRegion] = useState<string | null>(null)
 
   const subtotal = getTotalPrice()
-  const shippingCost = selectedRegion?.cost || 0
-  const total = subtotal + shippingCost
+
+
   const [errors, setErrors] = useState<{
   shipping?: {
     fullName?: string
@@ -290,7 +225,7 @@ ${itemsList}
 *ORDER SUMMARY*
 Subtotal: ₦${subtotal.toLocaleString()}.00
 
- Delivery Method: ${
+Delivery Method: ${
   deliveryMethod === "pickup"
     ? "Pickup"
     : selectedRegion?.region || "Not selected"
@@ -321,7 +256,12 @@ Account Number: 1221883236
 
     return `https://wa.me/2348108400962?text=${encodeURIComponent(message)}`
   }
+  const shippingCost =
+  deliveryMethod === "pickup"
+    ? 0
+    : selectedRegion?.cost ?? 0
 
+const total = subtotal + shippingCost
   const fetchOrderId = async () => {
     const res = await fetch("/api/order-id", {
       method: "POST",
@@ -1143,7 +1083,7 @@ if (deliveryMethod === "delivery") {
 
 
 
-           {deliveryMethod === "delivery" && (
+ {deliveryMethod === "delivery" && (
   <div className="bg-white rounded-lg p-6 shadow-sm">
     <h2 className="text-xl font-bold text-gray-900 mb-4">
       Delivery Region *
@@ -1155,7 +1095,6 @@ if (deliveryMethod === "delivery") {
           key={region.region}
           className="border border-gray-200 rounded-lg overflow-hidden"
         >
-          {/* Region Header */}
           <button
             type="button"
             onClick={() => setSelectedRegion(region)}
@@ -1174,59 +1113,35 @@ if (deliveryMethod === "delivery") {
                 className="w-4 h-4"
               />
               <div>
-               <p className="font-semibold">{region.region}</p>
+                <p className="font-semibold">{region.region}</p>
 
-<p
-  className={`text-sm ${
-    selectedRegion?.region === region.region
-      ? "text-white/90"
-      : "text-gray-600"
-  }`}
->
-  Shipping:{" "}
-  {region.cost !== null
-    ? `₦${region.cost.toLocaleString()}`
-    : region.costLabel}
-</p>
-
+                <p
+                  className={`text-sm ${
+                    selectedRegion?.region === region.region
+                      ? "text-white/90"
+                      : "text-gray-600"
+                  }`}
+                >
+                  Shipping:{" "}
+                  {region.cost !== null
+                    ? `₦${region.cost.toLocaleString()}`
+                    : region.costLabel}
+                </p>
               </div>
             </div>
           </button>
-
-          {/* Areas — ALWAYS VISIBLE */}
-          <div
-            className={`px-4 py-3 border-t ${
-              selectedRegion?.region === region.region
-                ? "border-[#5aaa3f] bg-[#5aaa3f]/10"
-                : "border-gray-200 bg-gray-50"
-            }`}
-          >
-            <p className="text-sm font-semibold text-gray-700 mb-2">
-              Included Areas:
-            </p>
-
-            <div className="flex flex-wrap gap-2">
-              {region.areas.map((area) => (
-                <span
-                  key={area}
-                  className="bg-gray-200 text-gray-800 text-xs px-3 py-1 rounded-full"
-                >
-                  {area}
-                </span>
-              ))}
-            </div>
-          </div>
         </div>
       ))}
     </div>
-    {selectedRegion?.region === "International" && (
-  <p className="text-sm text-gray-600 mt-2">
-    International shipping cost will be confirmed after order review.
-  </p>
-)}
 
+    {selectedRegion?.region === "International" && (
+      <p className="text-sm text-gray-600 mt-3">
+        International shipping cost will be confirmed after order review.
+      </p>
+    )}
   </div>
 )}
+
 
 
 
@@ -1239,20 +1154,23 @@ if (deliveryMethod === "delivery") {
             <div className="bg-white rounded-lg p-6 shadow-sm sticky top-4 space-y-4">
               <h2 className="text-xl font-bold text-gray-900">Order Summary</h2>
 
-              <div className="space-y-3 pb-4 border-b border-gray-200">
-                <div className="flex justify-between text-gray-600">
-                 <span>
-  {selectedRegion?.cost !== null
-    ? `₦${shippingCost.toLocaleString()}.00`
-    : "To be discussed"}
-</span>
+            <div className="space-y-3 pb-4 border-b border-gray-200">
+  <div className="flex justify-between text-gray-600">
+    <span>Subtotal:</span>
+    <span>₦{subtotal.toLocaleString()}.00</span>
+  </div>
 
-                </div>
-                <div className="flex justify-between text-gray-600">
-                  <span>Shipping:</span>
-                  <span>{shippingCost > 0 ? `₦${shippingCost.toLocaleString()}.00` : "Select region"}</span>
-                </div>
-              </div>
+  <div className="flex justify-between text-gray-600">
+    <span>Shipping:</span>
+    <span>
+      {deliveryMethod === "pickup"
+        ? "₦0.00"
+        : selectedRegion?.cost !== null
+          ? `₦${shippingCost.toLocaleString()}.00`
+          : "To be discussed"}
+    </span>
+  </div>
+</div>
 
               <div className="flex justify-between text-xl font-bold text-gray-900">
                 <span>Total:</span>
