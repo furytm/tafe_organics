@@ -170,7 +170,7 @@ export default function AboutPageContent() {
               },
               {
                 q: "How big are your bar soaps?",
-                a: "Each bar is 245g net weight, perfect for extended use.",
+                a: "Each bar varies from 50 to 100g net weight, perfect for extended use.",
               },
               {
                 q: "How do I keep my balms & butters fresh?",
